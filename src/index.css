@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply bg-[#FAF9FC] text-ink-900 font-sans;
+  line-height: 1.55;
+}
+
+/* Monospace for data-dense values per PRD §8 */
+.data {
+  @apply font-mono text-[0.92em];
+}
+
+/* Thin scrollbars for ledger/tables */
+.thin-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-ink-400/40;
+}
