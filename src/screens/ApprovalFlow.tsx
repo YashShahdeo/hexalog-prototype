@@ -176,8 +176,18 @@ export function ApprovalFlow({
           )}
 
           <p className="mt-2.5 text-center text-[10.5px] leading-relaxed text-ink-600">
-            {humanSteps.length} regulatory step{humanSteps.length === 1 ? '' : 's'}{' '}
-            {humanSteps.length === 1 ? 'stays' : 'stay'} human-gated under the autonomy policy.
+            {humanSteps.length === 0 ? (
+              <>
+                No regulatory steps in this plan — every action falls inside the autonomy policy.
+                {orderedSteps.some((s) => s.autonomy === 'recommend') &&
+                  ' The client-facing step is recommend-only and still routes to a human.'}
+              </>
+            ) : (
+              <>
+                {humanSteps.length} regulatory step{humanSteps.length === 1 ? '' : 's'}{' '}
+                {humanSteps.length === 1 ? 'stays' : 'stay'} human-gated under the autonomy policy.
+              </>
+            )}
           </p>
         </section>
 

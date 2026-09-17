@@ -38,7 +38,7 @@ export function ExceptionLedger({ onOpenException }: { onOpenException: (id: str
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Exception Ledger</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          The full queue — sorted by business risk, not recency.
+          Sorted by business risk, not recency — filtered to Phase 1 scope by default.
         </p>
       </header>
 
@@ -80,13 +80,14 @@ export function ExceptionLedger({ onOpenException }: { onOpenException: (id: str
       </p>
 
       {/* Column headers */}
-      <div className="hidden w-full grid-cols-[86px_minmax(260px,1fr)_92px_108px_84px_148px] items-center gap-3 border-b border-ink-900/8 bg-white px-5 py-2.5 text-[10.5px] font-bold uppercase tracking-wider text-ink-400 md:grid">
+      {/* FIX 1 — CATEGORY column dropped (redundant under the Customs default). Desktop table only
+          at lg+ where the ~700px min grid fits inside the card; below that, rows stack as cards. */}
+      <div className="hidden w-full grid-cols-[80px_minmax(220px,1fr)_100px_72px_150px] items-center gap-3 border-b border-ink-900/8 bg-white px-5 py-2.5 text-[10.5px] font-bold uppercase tracking-wider text-ink-400 lg:grid">
         <span>Severity</span>
         <span>Exception</span>
         <span title="Derived from the resolution plan: every step auto → Auto-eligible; any regulatory/financial step → Human-gated; mixed plans → Partial.">Autonomy</span>
-        <span>AI confidence</span>
-        <span>Category</span>
-        <span />
+        <span>Confidence</span>
+        <span className="text-right">Status</span>
       </div>
 
       {/* Rows */}

@@ -104,8 +104,8 @@ export function LedgerRow({
       onClick={() => onOpen(exception.id)}
       className="group w-full border-b border-ink-900/6 px-5 py-3.5 text-left transition-colors last:border-b-0 hover:bg-soft-lavender/60"
     >
-      {/* Desktop: table row — B3: exception column keeps ≥260px; secondary columns compress */}
-      <span className="hidden w-full grid-cols-[86px_minmax(260px,1fr)_92px_108px_84px_148px] items-center gap-3 md:grid">
+      {/* Desktop: table row — exception column ≥220px, STATUS fully visible (category lives on the mobile card) */}
+      <span className="hidden w-full grid-cols-[80px_minmax(220px,1fr)_100px_72px_150px] items-center gap-3 lg:grid">
         <Badge kind="severity" value={exception.severity} size="xs" />
         <span className="block min-w-0">
           <span className="block truncate text-[14px] font-semibold text-ink-900" title={exception.title}>
@@ -117,18 +117,14 @@ export function LedgerRow({
         </span>
         <AutonomyChip plan={exception.resolutionPlan} />
         <span className="data text-[13px] font-semibold text-ink-900">{exception.confidence}%</span>
-        <CategoryLabel category={exception.category} />
         <span className="flex items-center justify-end gap-1.5">
           <SegmentChip segment={exception.clientSegment} />
           <Badge kind="status" value={exception.status} size="xs" />
-          <span className="flex items-center gap-1 text-[12px] font-semibold text-brand-purple opacity-0 transition-opacity group-hover:opacity-100">
-            Open <ArrowRight size={13} />
-          </span>
         </span>
       </span>
 
-      {/* Mobile: stacked card (§4.4 — never horizontally scroll a table on mobile) */}
-      <span className="flex w-full flex-col gap-2 md:hidden">
+      {/* Mobile/tablet: stacked card — visible below lg, where the desktop table hides */}
+      <span className="flex w-full flex-col gap-2 lg:hidden">
         <span className="flex items-center justify-between gap-3">
           <span className="flex items-center gap-1.5">
             <Badge kind="severity" value={exception.severity} size="xs" />

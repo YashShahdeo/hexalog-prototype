@@ -235,7 +235,7 @@ export function ExceptionDetail({
               </div>
             )}
 
-            {e.workingCapital && (
+            {e.workingCapital && e.clientSegment === 'msme_d2c' && (
               <p className="mt-3 border-l-2 border-brand-purple/30 pl-3 text-[11px] italic leading-relaxed text-ink-600">
                 “What holds MSMEs back is rarely the product — it's the supply chain behind it.” Every cleared
                 exception releases working capital back to the client.
