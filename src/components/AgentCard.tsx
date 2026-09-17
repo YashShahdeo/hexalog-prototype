@@ -1,4 +1,4 @@
-import { ArrowDownToLine, Target, Wrench, ArrowUpFromLine, Gauge, ShieldCheck } from 'lucide-react'
+import { ArrowDownToLine, Target, Wrench, ArrowUpFromLine, Gauge, ShieldAlert, ShieldCheck } from 'lucide-react'
 import type { Agent } from '../types'
 import { Badge } from './Badge'
 
@@ -28,6 +28,14 @@ export function AgentCard({ agent }: { agent: Agent }) {
           </div>
         ))}
       </dl>
+
+      {/* Agent boundary — the actual policy, replacing an unproven 'policy-bound' assertion */}
+      <div className="mt-4 flex items-start gap-2 rounded-lg border border-[#F5C6C6] bg-[#FDECEC] px-3 py-2.5">
+        <ShieldAlert size={13} className="mt-0.5 shrink-0 text-[#B03030]" />
+        <p className="text-[11.5px] leading-snug text-[#8A2424]">
+          <span className="font-bold uppercase tracking-wide">Must never</span> · {agent.mustNever}
+        </p>
+      </div>
 
       <div className="mt-4 flex items-center gap-4 border-t border-ink-900/6 pt-3.5">
         <span className="flex items-center gap-1.5 text-[12px] text-ink-600">

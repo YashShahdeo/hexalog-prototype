@@ -32,18 +32,34 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
       </header>
 
       {/* Top stat row */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard label="Shipments in transit" value={312} sub="6 of 80+ lanes · filtered view" />
         <StatCard label="On track" value="284" sub="91.0% of network" tone="success" />
-        <StatCard label="At risk" value={atRisk} sub="SLA exposure flagged" tone="warning" />
+        <StatCard
+          label="At risk"
+          value={atRisk}
+          sub="SLA exposure flagged"
+          tone="warning"
+          tooltip="5 of 6 open exceptions carry medium or high SLA risk — 1 is low-risk (auto-resolution likely)."
+        />
         <StatCard label="Open exceptions" value={open.length} sub="queued for resolution" tone="danger" />
       </div>
 
       {/* Severity breakdown */}
-      <div className="mt-4 grid grid-cols-3 gap-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard label="High severity" value={bySeverity.high} sub="customs-critical" tone="danger" />
         <StatCard label="Medium severity" value={bySeverity.medium} sub="needs review" tone="warning" />
         <StatCard label="Low severity" value={bySeverity.low} sub="auto-resolution likely" />
+      </div>
+
+      {/* Outcome strip — §2.8(a): outcomes, not just counts */}
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-card border border-ink-900/8 bg-white px-4 py-3 shadow-card">
+        <span className="text-[12px] font-semibold text-ink-600">This week (simulated):</span>
+        <span className="data text-[13px] font-bold text-success">41 auto-resolved</span>
+        <span className="text-ink-400">·</span>
+        <span className="data text-[13px] font-bold text-[#8A6D0A]">9 escalated</span>
+        <span className="text-ink-400">·</span>
+        <span className="data text-[13px] font-bold text-brand-purple">14.2 ops-hours returned</span>
       </div>
 
       {/* Priority exceptions */}

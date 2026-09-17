@@ -5,6 +5,26 @@ import { Badge, SlaRiskBadge } from '../components/Badge'
 import { Button } from '../components/Button'
 import type { Exception, WorkingCapitalImpact } from '../types'
 
+/** Production-integration context for each evidence source — hover for the honest status. */
+const SOURCE_NOTES: Record<string, string> = {
+  'customs feed': 'EDI / customs portal feed in production — integration assumed, to be confirmed Week 1',
+  'OMS document store': 'Existing platform document store — assumed accessible via internal API',
+  'OMS reverse-logistics module': 'Existing platform reverse-logistics data — assumed accessible via internal API',
+  'carrier API': 'Carrier milestone API — Hexalog already surfaces real-time tracking, so this feed is presumed live',
+  'port data feed': 'Port congestion / schedule data — third-party feed, integration assumed',
+  'Hexalog partner network': 'Partner-network quoting API — assumed via platform integrations',
+  'classification rules': 'Classification rule engine — a Phase 2 build item; logic shown is illustrative',
+  'tariff table': 'HS tariff reference data — static, low integration risk',
+  '~1,800 historical cases': 'Synthetic case history built for this prototype — would be replaced by 4–6 weeks of real exception records',
+  'comms log': 'Email / portal communication log — integration assumed',
+  'warehouse WMS': 'WMS scan events — Hexalog operates VACs with 99.5% inventory accuracy, so scan data is presumed live',
+  'last-mile app': 'Driver-app events — Hexalog already manages last-mile exception flows, so this feed is presumed live',
+  'address service': 'Address validation service — commodity API, low integration risk',
+  'VAC inspection log': 'Value-Add Centre inspection records — assumed via WMS integration',
+  'finance system': 'Client-ledger / finance system — read-only integration assumed',
+}
+const DEFAULT_SOURCE_NOTE = 'Production system mapping is an assumption — to be confirmed in Week 1.'
+
 function EvidenceRow({ index, label, value, source }: { index: number; label: string; value: string; source: string }) {
   return (
     <li className="flex gap-3.5">
@@ -14,7 +34,12 @@ function EvidenceRow({ index, label, value, source }: { index: number; label: st
       <div className="min-w-0 flex-1 rounded-card border border-ink-900/8 bg-white px-4 py-3">
         <div className="flex items-baseline justify-between gap-3">
           <p className="text-[10.5px] font-bold uppercase tracking-widest text-ink-400">{label}</p>
-          <p className="shrink-0 text-[10.5px] font-semibold text-brand-violet">source: {source}</p>
+          <p
+            className="data-hover shrink-0 text-[10.5px] font-semibold text-brand-violet"
+            title={SOURCE_NOTES[source] ?? DEFAULT_SOURCE_NOTE}
+          >
+            source: {source}
+          </p>
         </div>
         <p className="mt-1 text-[13.5px] leading-snug text-ink-900">{value}</p>
       </div>
@@ -95,6 +120,12 @@ export function ExceptionDetail({
           <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Confidence</p>
           <p className="data mt-1.5 text-[24px] font-bold leading-none text-brand-purple">{e.confidence}%</p>
           <p className="mt-1.5 text-[11px] text-ink-600">evidence-backed, see trail →</p>
+          {e.wrongCost && (
+            <p className="mt-2 border-t border-ink-900/6 pt-2 text-[10.5px] leading-snug text-ink-600">
+              <span className="font-bold uppercase tracking-wide text-[#B03030]">If this is wrong:</span>{' '}
+              {e.wrongCost}
+            </p>
+          )}
         </div>
         <div className="rounded-card border border-ink-900/8 bg-white p-4 shadow-card">
           <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">SLA impact</p>
@@ -115,6 +146,14 @@ export function ExceptionDetail({
           {/* Evidence trail */}
           <section>
             <h2 className="mb-3 text-[15px] font-bold text-ink-900">Evidence trail</h2>
+            {e.topNote && (
+              <div className="mb-3 rounded-card border border-[#F0E1A0] bg-[#FDF6DC] px-4 py-3">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-[#8A6D0A]">
+                  Read this first — filing-accuracy framing
+                </p>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-[#8A6D0A]">{e.topNote}</p>
+              </div>
+            )}
             <ol className="flex flex-col gap-2.5">
               {e.evidenceTrail.map((ev, i) => (
                 <EvidenceRow key={i} index={i + 1} label={ev.label} value={ev.value} source={ev.source} />

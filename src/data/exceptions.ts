@@ -20,6 +20,8 @@ export const EXCEPTIONS: Exception[] = [
     clientName: 'MSME D2C brand (apparel)',
     rootCause: 'Commercial invoice never uploaded by exporter; customs feed shows DOC_HOLD since 06:42 IST',
     nextStep: 'Request invoice from exporter via Document Agent; prepare pre-cleared resubmission for approval',
+    wrongCost:
+      'Amended filing rejected → +24h dwell, demurrage exposure, and a second customs touch on the same shipment.',
     evidenceTrail: [
       { label: 'Customs event', value: 'DOC_HOLD — missing commercial invoice', source: 'customs feed' },
       { label: 'Document store check', value: '0 invoices found for SHP-8842 (4 other docs present)', source: 'OMS document store' },
@@ -62,6 +64,10 @@ export const EXCEPTIONS: Exception[] = [
     rootCause:
       'Filing was consistent with all submitted documents (no filing error); BOM supports a second defensible reading (8448.20) — a post-filing duty-delta exposure of 6.4% ≈ ₹31,200',
     nextStep: 'Compile classification dossier; compliance specialist must resolve the ambiguity before any amended filing',
+    topNote:
+      'Hexalog’s filing accuracy is not in question — the declaration was consistent with every submitted document (Hexalog publishes 100% HS code classification accuracy). The exposure is inherent BOM ambiguity on the shipper’s side, which is a different problem and needs a different resolution path.',
+    wrongCost:
+      'Wrong reclassification → duty shortfall plus penalty exposure; repeated errors carry licence risk. This is why the step is human-gated.',
     evidenceTrail: [
       { label: 'Filing accuracy check', value: 'Declaration consistent with all submitted documents — exposure is inherent BOM ambiguity, not a filing error', source: 'OMS document store' },
       { label: 'Classification scan', value: 'Declared 8448.11 vs BOM-implied 8448.20 (two defensible readings)', source: 'classification rules' },
@@ -100,6 +106,8 @@ export const EXCEPTIONS: Exception[] = [
     clientName: 'Enterprise consumer-electronics client',
     rootCause: 'Vessel berthing delayed 26h at Jebel Ali due to congestion; carrier revised ETA downstream',
     nextStep: 'Evaluate alternate feeder connection; notify client with revised ETA',
+    wrongCost:
+      'Wrong reroute → paid feeder slot on a vessel that was never the constraint; cost incurred, delay unchanged.',
     evidenceTrail: [
       { label: 'Vessel schedule', value: 'MV Ocean Mermaid berthing pushed +26h', source: 'carrier API' },
       { label: 'Port congestion index', value: 'Jebel Ali at 87% utilization (threshold 80%)', source: 'port data feed' },
@@ -138,6 +146,8 @@ export const EXCEPTIONS: Exception[] = [
     clientName: 'MSME D2C brand (home goods)',
     rootCause: '42 of 380 cartons bear outdated barcode labels from prior SKU batch; QC line blocked the pick',
     nextStep: 'Trigger relabel task at VAC; verify against order SKU manifest before release',
+    wrongCost:
+      'Wrong release → mis-labelled cartons ship to the end customer; return cost plus brand damage on the client’s marketplace rating.',
     evidenceTrail: [
       { label: 'QC scan event', value: 'LABEL_MISMATCH on 42/380 cartons, line 3', source: 'warehouse WMS' },
       { label: 'Label registry', value: 'Barcode prefix belongs to SKU batch #A-2211 (superseded)', source: 'OMS document store' },
@@ -176,6 +186,8 @@ export const EXCEPTIONS: Exception[] = [
     clientName: 'MSME D2C brand (beauty)',
     rootCause: 'Consignee closed both attempt windows; driver GPS + photo confirm site closure, not address error',
     nextStep: 'Offer evening re-attempt slot to consignee via notification; auto-assign driver',
+    wrongCost:
+      'Wrong address inference → third failed attempt, RTO triggered, delivery cost doubled.',
     evidenceTrail: [
       { label: 'Attempt log', value: '2 failed attempts (11:20, 16:45) — reason: SITE_CLOSED', source: 'last-mile app' },
       { label: 'Address validation', value: 'Geocode match 98.7% — address not the issue', source: 'address service' },
@@ -214,6 +226,8 @@ export const EXCEPTIONS: Exception[] = [
     rootCause:
       '42-unit apparel return batch failed inbound QC at Bhiwandi VAC on label/tag mismatch; RTO pickup line blocked and refund clock is running against the brand',
     nextStep: 'Triage QC failures, route refundable units for approval and restockable units for relabel — refund SLA is the binding constraint',
+    wrongCost:
+      'Wrong disposition → sellable inventory scrapped, or unsellable stock restocked and re-shipped.',
     evidenceTrail: [
       { label: 'QC scan event', value: 'QC_FAIL on 42/42 returned units — tag/label mismatch vs listing', source: 'warehouse WMS' },
       { label: 'RTO pipeline', value: 'Reverse pickup initiated 9 days ago; refund SLA window closes in 3 days', source: 'OMS reverse-logistics module' },
@@ -254,6 +268,8 @@ export const EXCEPTIONS: Exception[] = [
     clientName: 'Enterprise industrial-goods client',
     rootCause: 'Assessed duty used stale tariff row (pre-January rate); overcharge of ₹9,840 identified post-clearance',
     nextStep: 'Closed — refund filed, confirmed credited. Feeds evaluation set as verified outcome.',
+    wrongCost:
+      'Wrong refund claim → claim rejected and flagged; future refunds on the same IEC scrutinised.',
     evidenceTrail: [
       { label: 'Tariff cross-check', value: 'Assessed 7.5% vs applicable 5.0% (HS 8517.62)', source: 'tariff table' },
       { label: 'Refund filing', value: 'Filed with BOE ref, approved by compliance', source: 'customs feed' },

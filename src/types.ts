@@ -50,6 +50,11 @@ export interface Exception {
   /** "Next step" line for the summary strip (screen 03) */
   nextStep: string
 
+  /** Distinct callout rendered above the evidence trail (e.g. HS-case filing-accuracy framing) */
+  topNote?: string
+  /** Blast radius if the AI's call is wrong — the cost of being wrong */
+  wrongCost?: string
+
   evidenceTrail: ExceptionEvidence[]
   businessImpact: ExceptionBusinessImpact
   /** Client context for the MSME working-capital lens (screen 03 impact aside) */
@@ -92,6 +97,8 @@ export interface SimulationScenario {
   description: string
   passed: boolean
   reason?: string
+  /** "What we'd do about it" — next autonomy step on a pass, human path on an escalation */
+  escalationPath?: string
   agentConfidence?: number
   taskSuccessPct?: number
   criticalFailures?: number

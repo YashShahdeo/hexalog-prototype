@@ -59,10 +59,11 @@ export function ExceptionLedger({ onOpenException }: { onOpenException: (id: str
       </div>
 
       {/* Column headers */}
-      <div className="grid grid-cols-[110px_minmax(0,1fr)_110px_110px_110px_120px] items-center gap-4 border-b border-ink-900/8 bg-white px-5 py-2.5 text-[10.5px] font-bold uppercase tracking-wider text-ink-400">
+      <div className="grid grid-cols-[90px_minmax(0,1fr)_90px_90px_90px_100px_100px] items-center gap-4 border-b border-ink-900/8 bg-white px-5 py-2.5 text-[10.5px] font-bold uppercase tracking-wider text-ink-400">
         <span>Severity</span>
         <span>Exception</span>
         <span>Category</span>
+        <span title="Derived from the resolution plan: every step auto → Auto-eligible; any regulatory/financial step → Human-gated; mixed plans → Partial.">Autonomy</span>
         <span>AI confidence</span>
         <span>Status</span>
         <span />

@@ -72,6 +72,25 @@ export function PriorityExceptionCard({
   )
 }
 
+/** §2.7 — the thesis at a glance: can this class resolve autonomously at all? */
+function AutonomyChip({ plan }: { plan: Exception['resolutionPlan'] }) {
+  const levels = plan.map((s) => s.autonomy)
+  const label = levels.every((l) => l === 'auto') ? 'Auto-eligible' : levels.includes('human') ? 'Human-gated' : 'Partial'
+  const cls =
+    label === 'Auto-eligible'
+      ? 'bg-[#E6F5EC] text-success border-[#BFE5CD]'
+      : label === 'Human-gated'
+        ? 'bg-navy text-white border-navy'
+        : 'bg-[#FDF6DC] text-[#8A6D0A] border-[#F0E1A0]'
+  return (
+    <span
+      className={`inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${cls}`}
+    >
+      {label}
+    </span>
+  )
+}
+
 /** Full table row for Exception Ledger */
 export function LedgerRow({
   exception,
@@ -83,7 +102,7 @@ export function LedgerRow({
   return (
     <button
       onClick={() => onOpen(exception.id)}
-      className="grid w-full grid-cols-[110px_minmax(0,1fr)_110px_110px_110px_120px] items-center gap-4 border-b border-ink-900/6 px-5 py-3.5 text-left transition-colors last:border-b-0 hover:bg-soft-lavender/60"
+      className="grid w-full grid-cols-[90px_minmax(0,1fr)_90px_90px_90px_100px_100px] items-center gap-4 border-b border-ink-900/6 px-5 py-3.5 text-left transition-colors last:border-b-0 hover:bg-soft-lavender/60"
     >
       <Badge kind="severity" value={exception.severity} size="xs" />
       <div className="min-w-0">
@@ -93,6 +112,7 @@ export function LedgerRow({
         </p>
       </div>
       <CategoryLabel category={exception.category} />
+      <AutonomyChip plan={exception.resolutionPlan} />
       <span className="data text-[13px] font-semibold text-ink-900">{exception.confidence}%</span>
       <div className="flex items-center gap-1.5">
         <SegmentChip segment={exception.clientSegment} />

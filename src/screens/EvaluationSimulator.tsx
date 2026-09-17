@@ -163,7 +163,9 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
               </div>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Task success</p>
-                <p className="data text-[17px] font-bold text-ink-900">{result.taskSuccessPct}%</p>
+                <p className={`data text-[17px] font-bold ${result.passed ? 'text-ink-900' : 'text-[#B03030]'}`}>
+                  {result.taskSuccessPct}%
+                </p>
               </div>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Critical failures</p>
@@ -173,6 +175,13 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
               </div>
             </div>
           </div>
+
+          {result.escalationPath && (
+            <div className="border-t border-ink-900/8 bg-[#FCFBFE] px-5 py-3.5">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-brand-purple">What we'd do about it</p>
+              <p className="mt-1 text-[12.5px] leading-relaxed text-ink-600">{result.escalationPath}</p>
+            </div>
+          )}
         </section>
       )}
 
