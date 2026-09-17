@@ -1,7 +1,10 @@
 export type Severity = 'high' | 'medium' | 'low'
 export type ExceptionStatus = 'new' | 'in_review' | 'resolved'
 export type AutonomyLevel = 'auto' | 'recommend' | 'human'
-export type ExceptionCategory = 'customs' | 'freight' | 'warehouse' | 'last_mile'
+export type ExceptionCategory = 'customs' | 'freight' | 'warehouse' | 'last_mile' | 'reverse_logistics'
+
+/** Client segment — MSME lens is Hexalog's stated thesis (CEO, YourStory). */
+export type ClientSegment = 'msme_d2c' | 'enterprise'
 
 export interface ExceptionEvidence {
   label: string
@@ -15,6 +18,13 @@ export interface ExceptionBusinessImpact {
   shipmentValue: string
   slaStatus: string
   estimatedCost: string
+}
+
+/** Working-capital framing — a held shipment is locked capital, not just a delay. */
+export interface WorkingCapitalImpact {
+  lockedAmount: string
+  lockedSince: string
+  atRiskPromise: string
 }
 
 export interface ResolutionStep {
@@ -42,7 +52,18 @@ export interface Exception {
 
   evidenceTrail: ExceptionEvidence[]
   businessImpact: ExceptionBusinessImpact
+  /** Client context for the MSME working-capital lens (screen 03 impact aside) */
+  clientSegment: ClientSegment
+  clientName: string
+  workingCapital?: WorkingCapitalImpact
   resolutionPlan: ResolutionStep[]
+}
+
+export interface AgentSourceInfo {
+  /** What this source would be in a production Hexalog deployment. */
+  productionSystem: string
+  /** Honest status of the integration that would supply it. */
+  integrationStatus: string
 }
 
 export interface Agent {
@@ -54,6 +75,8 @@ export interface Agent {
   output: string
   confidence: number
   autonomy: AutonomyLevel
+  /** Hard boundary — what this agent is never allowed to do. */
+  mustNever: string
 }
 
 export interface EvaluationMetric {

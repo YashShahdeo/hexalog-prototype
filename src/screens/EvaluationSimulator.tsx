@@ -2,8 +2,12 @@ import { useState } from 'react'
 import { Check, FlaskConical, Play, X } from 'lucide-react'
 import { EVALUATION_METRICS, SIMULATION_SCENARIOS, EVALUATION_NOTE } from '../data/evaluation'
 import { SimulatedDataBanner } from '../components/SimulatedDataNote'
+import { Button } from '../components/Button'
+import { StepTracker } from '../components/StepTracker'
+import { AuthorFooter } from '../components/AuthorFooter'
+import { ArrowRight } from 'lucide-react'
 
-export function EvaluationSimulator() {
+export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => void }) {
   const [selectedId, setSelectedId] = useState<string>(SIMULATION_SCENARIOS[0].id)
   const [ranScenarioId, setRanScenarioId] = useState<string | null>(null)
   const [running, setRunning] = useState(false)
@@ -21,11 +25,13 @@ export function EvaluationSimulator() {
   const result = ranScenarioId ? SIMULATION_SCENARIOS.find((s) => s.id === ranScenarioId)! : null
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+    <div className="pt-6 pb-6 sm:px-6 lg:px-8">
+      <StepTracker current="eval" />
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Evaluation & Simulator</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          Did the AI perform correctly? Will it work on the next 100 cases? Measured, not assumed.
+          A digital twin of the exception workflow — run the agents against real-world and edge-case scenarios
+          before they touch a live shipment. Measured, not assumed.
         </p>
       </header>
 
@@ -72,8 +78,9 @@ export function EvaluationSimulator() {
             </tbody>
           </table>
           <p className="border-t border-ink-900/6 bg-[#FDF6DC]/50 px-5 py-2.5 text-[11px] leading-relaxed text-[#8A6D0A]">
-            Human override rate currently misses target (11.3% vs ≤10%) — under escalations like HXL001351, the
-            ambiguity threshold is set conservatively. Tuning it is a roadmap-phase task, not a demo fix.
+            Human override rate currently misses target (11.3% vs ≤10%) — under ambiguous cases like
+            HXL001351, the autonomy threshold is deliberately conservative (escalation by design). Tuning it
+            is a roadmap-phase task, not a demo fix.
           </p>
         </section>
 
@@ -168,6 +175,15 @@ export function EvaluationSimulator() {
           </div>
         </section>
       )}
+
+      {/* Walkthrough continuation (PRD §11: Eval -> Roadmap) */}
+      <div className="mt-6 flex items-center justify-end">
+        <Button size="lg" onClick={onOpenRoadmap}>
+          Continue to Roadmap & ROI <ArrowRight size={15} />
+        </Button>
+      </div>
+
+      <AuthorFooter />
     </div>
   )
 }

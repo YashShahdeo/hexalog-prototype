@@ -1,5 +1,7 @@
 import { ArrowRight, Check, X } from 'lucide-react'
 import { HexMark } from '../components/HexMark'
+import { HexalogWinStrip } from '../components/HexalogWinStrip'
+import { AuthorFooter } from '../components/AuthorFooter'
 
 const TODAY_STEPS = [
   'Exception occurs',
@@ -34,7 +36,7 @@ function FlowLine({ steps, tone }: { steps: string[]; tone: 'today' | 'proposed'
                 ? 'border border-ink-900/10 bg-white text-ink-600'
                 : i === 5 // human step
                   ? 'bg-navy text-white'
-                  : 'bg-brand-purple/5 text-ink-600'
+                  : 'bg-brand-purple/1 border border-brand-purple text-white'
             }`}
           >
             {step}
@@ -51,7 +53,7 @@ function FlowLine({ steps, tone }: { steps: string[]; tone: 'today' | 'proposed'
 export function WhyWorkflow({ onEnter }: { onEnter: () => void }) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-brand-darkest via-brand-deep to-[#1B0E38]">
-      <div className="flex min-h-screen flex-col justify-center px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div className="flex min-h-screen flex-col px-4 py-8 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="mb-8 flex items-center gap-2.5 text-white">
           <HexMark size={26} />
           <span className="text-[18px] font-bold tracking-tight">hexalog</span>
@@ -101,6 +103,20 @@ export function WhyWorkflow({ onEnter }: { onEnter: () => void }) {
           human-controlled.
         </p>
 
+        <p className="mt-4 text-[13px] leading-relaxed text-white/70">
+          <span className="font-semibold text-white">Scope:</span> this prototype goes deep on one class — customs
+          DOC_HOLD on the India–China and India–Middle East lanes, the corridors Hexalog runs today. The same
+          pattern extends to Vietnam, Thailand and the Middle East as those lanes open.
+        </p>
+
+        <p className="mt-4 text-[13px] leading-relaxed text-white/70">
+          <span className="font-semibold text-white">The hook:</span> Hexalog's own last-mile product page already
+          lists “Manage forward, return, and exception flows in real time” as a dashboard capability. This is what
+          that promise looks like when agents run the exception leg.
+        </p>
+
+        <HexalogWinStrip tone="dark" />
+
         <div className="mt-9">
           <button
             onClick={onEnter}
@@ -114,7 +130,12 @@ export function WhyWorkflow({ onEnter }: { onEnter: () => void }) {
         <p className="mt-10 text-[11.5px] leading-relaxed text-white/45">
           Independent concept built from publicly available information about Hexalog's cross-border logistics
           platform. Not built with inside access to Hexalog's systems or data. All shipment IDs, metrics and
-          simulation results shown are illustrative/synthetic. Prepared by Otis (Yash Shahdeo).
+          simulation results shown are illustrative/synthetic. Positioned as a resolution layer for Hexalog's
+          cross-border orchestration platform (hexalog.in).
+        </p>
+        <AuthorFooter dark />
+        <p className="mt-3 text-[11.5px] font-medium text-white/60">
+          Assumptions &amp; what I don't know → see the Assumptions badge in the header of every screen.
         </p>
       </div>
     </div>

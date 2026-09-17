@@ -12,6 +12,7 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: 'freight', label: 'Freight' },
   { id: 'warehouse', label: 'Warehouse' },
   { id: 'last_mile', label: 'Last-mile' },
+  { id: 'reverse_logistics', label: 'Reverse logistics' },
 ]
 
 export function ExceptionLedger({ onOpenException }: { onOpenException: (id: string) => void }) {
@@ -24,7 +25,7 @@ export function ExceptionLedger({ onOpenException }: { onOpenException: (id: str
   })
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+    <div className="pt-6 pb-6 sm:px-6 lg:px-8">
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Exception Ledger</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">

@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ArrowRight, CheckCircle2, Circle, ClipboardCheck, RefreshCw, ShieldCheck, UserCheck } from 'lucide-react'
+import { StepTracker } from '../components/StepTracker'
 import { EXCEPTIONS } from '../data/exceptions'
+import { Button } from '../components/Button'
+import { AuthorFooter } from '../components/AuthorFooter'
 
 type Phase = 'awaiting' | 'executing' | 'verifying' | 'verified'
 
@@ -8,7 +11,7 @@ const EXECUTION_ITEMS = [
   { label: 'Invoice request sent to exporter (Document Agent)', detail: 'auto step · completed 2m after approval' },
   { label: 'Invoice received & validated against packing list', detail: 'auto step · 14 line items, values matched' },
   { label: 'Customs resubmission package prepared', detail: 'recommend step · drafted for review' },
-  { label: 'Resubmission approved & submitted (Compliance Specialist)', detail: 'human step · approved by V. Malik' },
+  { label: 'Resubmission approved & submitted (Compliance Specialist)', detail: 'human step · approved by Customs Compliance Specialist' },
   { label: 'DOC_HOLD release confirmed, client ETA updated', detail: 'auto step · customs feed shows CLEARED' },
 ]
 
@@ -52,7 +55,8 @@ export function ApprovalFlow({
   const autoSteps = exception.resolutionPlan.filter((s) => s.autonomy === 'auto')
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+    <div className="pt-6 pb-6 sm:px-6 lg:px-8">
+      <StepTracker current="approval" />
       <button
         onClick={onBack}
         className="mb-4 flex items-center gap-1.5 text-[12.5px] font-semibold text-ink-600 transition-colors hover:text-brand-purple"
@@ -68,7 +72,7 @@ export function ApprovalFlow({
         </p>
       </header>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         {/* Column 1 — Human approval */}
         <section className="rounded-card border border-ink-900/8 bg-white p-5 shadow-card">
           <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-ink-900">
@@ -98,20 +102,17 @@ export function ApprovalFlow({
             ))}
           </div>
 
-          <button
+          <Button
+            size="lg"
+            className="mt-5 w-full"
             onClick={startExecution}
             disabled={phase !== 'awaiting'}
-            className={`mt-5 w-full rounded-lg px-4 py-3 text-[13.5px] font-bold transition-all ${
-              phase === 'awaiting'
-                ? 'bg-brand-purple text-white hover:bg-brand-deep'
-                : 'cursor-default bg-soft-lavender text-ink-400'
-            }`}
           >
             {phase === 'awaiting' ? 'Approve & execute' : 'Approved ✓'}
-          </button>
+          </Button>
           <p className="mt-2.5 text-center text-[10.5px] leading-relaxed text-ink-600">
-            {humanSteps.length} regulatory step{humanSteps.length === 1 ? '' : 's'} stay human-gated under the
-            autonomy policy.
+            {humanSteps.length} regulatory step{humanSteps.length === 1 ? '' : 's'}{' '}
+            {humanSteps.length === 1 ? 'stays' : 'stay'} human-gated under the autonomy policy.
           </p>
         </section>
 
@@ -152,26 +153,27 @@ export function ApprovalFlow({
           </div>
         </section>
 
-        {/* Column 3 — Verify outcome (dark panel) */}
-        <section className="rounded-card bg-navy p-5 shadow-elevated">
-          <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-white">
-            <ShieldCheck size={15} className="text-soft-yellow" /> Verify outcome
+        {/* Column 3 — Verify outcome — white card */}
+        <section className="rounded-card border border-ink-900/8 bg-white p-5 shadow-card">
+          <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-ink-900">
+            <ShieldCheck size={15} className="text-brand-purple" /> Verify outcome
           </h2>
 
           <dl className="mt-4 flex flex-col gap-3">
             {[
-              { label: 'Customs status', pending: 'checking…', final: 'DOC_HOLD cleared', ok: true },
-              { label: 'Carrier status', pending: 'checking…', final: 'Terminal gate-out confirmed', ok: true },
-              { label: 'ETA', pending: 'checking…', final: 'Restored — 18 Sep, 14:00 IST', ok: true },
-              { label: 'Customer notified', pending: 'checking…', final: 'Yes — revised ETA sent', ok: true },
-              { label: 'SLA status', pending: 'checking…', final: 'Recovered — on track', ok: true },
+              { label: 'Customs status', final: 'DOC_HOLD cleared' },
+              { label: 'Carrier status', final: 'Terminal gate-out confirmed' },
+              { label: 'ETA', final: 'Restored — 18 Sep, 14:00 IST' },
+              { label: 'Customer notified', final: 'Yes — revised ETA sent' },
+              { label: 'SLA status', final: 'Recovered — on track' },
             ].map((row) => {
               const show = phase === 'verified'
               return (
-                <div key={row.label} className="flex items-center justify-between gap-3 border-b border-white/8 pb-3 last:border-b-0 last:pb-0">
-                  <dt className="text-[10px] font-bold uppercase tracking-widest text-white/45">{row.label}</dt>
-                  <dd className={`text-[12px] font-semibold ${show ? (row.ok ? 'text-[#9be29b]' : 'text-soft-red') : 'text-white/35'}`}>
-                    {show ? row.final : row.pending}
+                <div key={row.label} className="flex items-center justify-between gap-3 border-b border-ink-900/6 pb-3 last:border-b-0 last:pb-0">
+                  <dt className="text-[10px] font-bold uppercase tracking-widest text-ink-400">{row.label}</dt>
+                  <dd className={`flex items-center gap-1.5 text-[12px] font-semibold ${show ? 'text-success' : 'text-ink-400/70'}`}>
+                    {show && <CheckCircle2 size={12} strokeWidth={2.5} />}
+                    {show ? row.final : 'checking…'}
                   </dd>
                 </div>
               )
@@ -180,14 +182,14 @@ export function ApprovalFlow({
 
           <div className="mt-5">
             {phase === 'verified' ? (
-              <div className="animate-fadeSlideIn flex items-center justify-center gap-2 rounded-lg bg-[#9be29b]/15 px-4 py-3">
-                <CheckCircle2 size={17} className="text-[#9be29b]" />
-                <span className="text-[13.5px] font-bold text-[#9be29b]">Resolution verified · 96%</span>
+              <div className="animate-fadeSlideIn flex items-center justify-center gap-2 rounded-lg bg-[#E6F5EC] px-4 py-3">
+                <CheckCircle2 size={17} className="text-success" />
+                <span className="text-[13.5px] font-bold text-success">Resolution verified · 96%</span>
               </div>
             ) : (
-              <div className="flex items-center justify-center gap-2 rounded-lg bg-white/5 px-4 py-3">
-                <RefreshCw size={15} className={`text-white/40 ${phase === 'verifying' ? 'animate-spin' : ''}`} />
-                <span className="text-[12.5px] font-medium text-white/40">
+              <div className="flex items-center justify-center gap-2 rounded-lg border border-ink-900/8 bg-soft-lavender/50 px-4 py-3">
+                <RefreshCw size={15} className={`text-ink-400 ${phase === 'verifying' ? 'animate-spin' : ''}`} />
+                <span className="text-[12.5px] font-medium text-ink-400">
                   {phase === 'awaiting' ? 'Awaiting approval' : 'Running verification checks…'}
                 </span>
               </div>
@@ -196,36 +198,37 @@ export function ApprovalFlow({
         </section>
       </div>
 
-      {/* Outcome loop strip */}
-      <div className="mt-7 rounded-card bg-navy px-6 py-4">
+      {/* Outcome loop strip — white card, outlined pills */}
+      <div className="mt-7 rounded-card border border-ink-900/8 bg-white px-6 py-4 shadow-card">
         <div className="flex items-center justify-center gap-3">
           {LOOP_STEPS.map((step, i) => (
             <span key={step} className="flex items-center gap-3">
               <span
                 className={`rounded-full px-4 py-1.5 text-[12px] font-semibold ${
-                  phase === 'verified' && i < 3 ? 'bg-soft-yellow text-brand-darkest' : 'bg-white/8 text-white/70'
+                  phase === 'verified' && i < 3
+                    ? 'bg-brand-purple text-white'
+                    : 'border border-ink-900/12 text-ink-600'
                 }`}
               >
                 {step}
               </span>
-              {i < LOOP_STEPS.length - 1 && <ArrowRight size={13} className="text-white/30" />}
+              {i < LOOP_STEPS.length - 1 && <ArrowRight size={13} className="text-ink-400" />}
             </span>
           ))}
         </div>
-        <p className="mt-2.5 text-center text-[11px] text-white/45">
-          Verified outcomes become new evaluation data — the loop feeds screen 06.
+        <p className="mt-2.5 text-center text-[11px] text-ink-400">
+          Verified outcomes become new evaluation data — the loop feeds the Evaluation screen.
         </p>
         {phase === 'verified' && (
-          <div className="mt-3 text-center">
-            <button
-              onClick={onOpenEval}
-              className="text-[12px] font-semibold text-soft-yellow underline-offset-2 hover:underline"
-            >
-              Continue to Evaluation →
-            </button>
+          <div className="mt-4 flex justify-center">
+            <Button size="lg" onClick={onOpenEval}>
+              Continue to Evaluation <ArrowRight size={15} />
+            </Button>
           </div>
         )}
       </div>
+
+      <AuthorFooter />
     </div>
   )
 }

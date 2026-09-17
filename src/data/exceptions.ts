@@ -3,6 +3,7 @@ import type { Exception } from '../types'
 /**
  * ILLUSTRATIVE / SIMULATED DATA — no real Hexalog shipments, metrics or systems.
  * Hero case: HXL001348 (missing commercial invoice) drives the primary walkthrough.
+ * Client segments + working-capital framing added to reflect Hexalog's MSME thesis.
  */
 export const EXCEPTIONS: Exception[] = [
   {
@@ -15,13 +16,15 @@ export const EXCEPTIONS: Exception[] = [
     status: 'new',
     confidence: 84,
     slaRisk: 'high',
+    clientSegment: 'msme_d2c',
+    clientName: 'MSME D2C brand (apparel)',
     rootCause: 'Commercial invoice never uploaded by exporter; customs feed shows DOC_HOLD since 06:42 IST',
     nextStep: 'Request invoice from exporter via Document Agent; prepare pre-cleared resubmission for approval',
     evidenceTrail: [
       { label: 'Customs event', value: 'DOC_HOLD — missing commercial invoice', source: 'customs feed' },
-      { label: 'Document store check', value: '0 invoices found for SHP-8842 (4 other docs present)', source: 'document store' },
+      { label: 'Document store check', value: '0 invoices found for SHP-8842 (4 other docs present)', source: 'OMS document store' },
       { label: 'Carrier milestone', value: 'Arrived Nhava Sheva 05:58 IST, held at terminal', source: 'carrier API' },
-      { label: 'Historical pattern', value: '94% of DOC_HOLD shipments with missing invoice resolve in 18–24h after upload', source: '1,842 historical cases' },
+      { label: 'Historical pattern', value: '94% of DOC_HOLD shipments with missing invoice resolve in 18–24h after upload', source: '~1,800 historical cases' },
       { label: 'Exporter comms', value: 'No invoice sent in last 72h (email + portal checked)', source: 'comms log' },
     ],
     businessImpact: {
@@ -30,6 +33,11 @@ export const EXCEPTIONS: Exception[] = [
       shipmentValue: '₹4.8L',
       slaStatus: 'AT RISK',
       estimatedCost: '₹8,400',
+    },
+    workingCapital: {
+      lockedAmount: '₹4.8L',
+      lockedSince: '06:42 IST today',
+      atRiskPromise: "Brand's marketplace SLA promise to its end customer",
     },
     resolutionPlan: [
       { step: 1, action: 'Auto-draft invoice request to exporter with shipment doc checklist', owner: 'Document Agent', autonomy: 'auto' },
@@ -43,19 +51,22 @@ export const EXCEPTIONS: Exception[] = [
     id: 'HXL001351',
     shipmentId: 'SHP-8849',
     route: 'Shenzhen → Delhi',
-    title: 'HS code mismatch — textile machinery',
+    title: 'HS classification ambiguity — post-filing duty exposure',
     category: 'customs',
     severity: 'high',
     status: 'in_review',
     confidence: 71,
     slaRisk: 'high',
-    rootCause: 'Declared HS code 8448.11 conflicts with bill-of-materials suggesting 8448.20 (duty delta 6.4%)',
-    nextStep: 'Escalated to compliance — specialist must confirm classification before any filing change',
+    clientSegment: 'msme_d2c',
+    clientName: 'MSME machinery importer',
+    rootCause:
+      'Filing was consistent with all submitted documents (no filing error); BOM supports a second defensible reading (8448.20) — a post-filing duty-delta exposure of 6.4% ≈ ₹31,200',
+    nextStep: 'Compile classification dossier; compliance specialist must resolve the ambiguity before any amended filing',
     evidenceTrail: [
-      { label: 'Classification scan', value: 'Declared 8448.11 vs BOM-implied 8448.20', source: 'document store' },
-      { label: 'Duty impact', value: '6.4% duty delta ≈ ₹31,200 exposure', source: 'tariff table' },
-      { label: 'Historical rulings', value: '3 of 5 similar BOMs classified under 8448.20', source: '1,842 historical cases' },
-      { label: 'Ambiguity flag', value: 'Item crosses subheading boundary — two defensible readings', source: 'classification rules' },
+      { label: 'Filing accuracy check', value: 'Declaration consistent with all submitted documents — exposure is inherent BOM ambiguity, not a filing error', source: 'OMS document store' },
+      { label: 'Classification scan', value: 'Declared 8448.11 vs BOM-implied 8448.20 (two defensible readings)', source: 'classification rules' },
+      { label: 'Duty impact', value: '6.4% duty delta ≈ ₹31,200 exposure if reclassified', source: 'tariff table' },
+      { label: 'Historical rulings', value: '3 of 5 similar BOMs classified under 8448.20', source: '~1,800 historical cases' },
     ],
     businessImpact: {
       currentDelayHours: 0,
@@ -63,6 +74,11 @@ export const EXCEPTIONS: Exception[] = [
       shipmentValue: '₹4.9L',
       slaStatus: 'AT RISK',
       estimatedCost: '₹31,200 duty exposure',
+    },
+    workingCapital: {
+      lockedAmount: '₹31,200',
+      lockedSince: 'Since duty assessment (provisional)',
+      atRiskPromise: 'Duty delta payable on demand if ambiguity resolves against the importer',
     },
     resolutionPlan: [
       { step: 1, action: 'Compile classification dossier: BOM, supplier spec sheet, prior rulings', owner: 'Investigation Agent', autonomy: 'auto' },
@@ -80,13 +96,15 @@ export const EXCEPTIONS: Exception[] = [
     status: 'in_review',
     confidence: 91,
     slaRisk: 'medium',
+    clientSegment: 'enterprise',
+    clientName: 'Enterprise consumer-electronics client',
     rootCause: 'Vessel berthing delayed 26h at Jebel Ali due to congestion; carrier revised ETA downstream',
     nextStep: 'Evaluate alternate feeder connection; notify client with revised ETA',
     evidenceTrail: [
       { label: 'Vessel schedule', value: 'MV Ocean Mermaid berthing pushed +26h', source: 'carrier API' },
       { label: 'Port congestion index', value: 'Jebel Ali at 87% utilization (threshold 80%)', source: 'port data feed' },
-      { label: 'Alternative routing', value: 'Feeder via Mundra available, +₹14,000, saves 18h', source: 'partner network' },
-      { label: 'Historical pattern', value: 'Congestion events at this level delay 31–40h in 78% of cases', source: '1,842 historical cases' },
+      { label: 'Alternative routing', value: 'Feeder via Mundra available, +₹14,000, saves 18h', source: 'Hexalog partner network' },
+      { label: 'Historical pattern', value: 'Congestion events at this level delay 31–40h in 78% of cases', source: '~1,800 historical cases' },
     ],
     businessImpact: {
       currentDelayHours: 26,
@@ -94,6 +112,11 @@ export const EXCEPTIONS: Exception[] = [
       shipmentValue: '₹11.2L',
       slaStatus: 'AT RISK',
       estimatedCost: '₹5,600',
+    },
+    workingCapital: {
+      lockedAmount: '₹11.2L',
+      lockedSince: '26h in transit delay',
+      atRiskPromise: 'Retail launch-window commitment to the client’s distributor',
     },
     resolutionPlan: [
       { step: 1, action: 'Request feeder quote via Mundra from partner network', owner: 'Investigation Agent', autonomy: 'auto' },
@@ -111,13 +134,15 @@ export const EXCEPTIONS: Exception[] = [
     status: 'new',
     confidence: 88,
     slaRisk: 'medium',
+    clientSegment: 'msme_d2c',
+    clientName: 'MSME D2C brand (home goods)',
     rootCause: '42 of 380 cartons bear outdated barcode labels from prior SKU batch; QC line blocked the pick',
     nextStep: 'Trigger relabel task at VAC; verify against order SKU manifest before release',
     evidenceTrail: [
       { label: 'QC scan event', value: 'LABEL_MISMATCH on 42/380 cartons, line 3', source: 'warehouse WMS' },
-      { label: 'Label registry', value: 'Barcode prefix belongs to SKU batch #A-2211 (superseded)', source: 'document store' },
+      { label: 'Label registry', value: 'Barcode prefix belongs to SKU batch #A-2211 (superseded)', source: 'OMS document store' },
       { label: 'Inventory match', value: 'Cartons physically match ordered SKUs — label-only defect', source: 'warehouse WMS' },
-      { label: 'Historical pattern', value: 'Relabel tasks complete in avg 2.1h; no downstream impact if released today', source: '1,842 historical cases' },
+      { label: 'Historical pattern', value: 'Relabel tasks complete in avg 2.1h; no downstream impact if released today', source: '~1,800 historical cases' },
     ],
     businessImpact: {
       currentDelayHours: 3,
@@ -125,6 +150,11 @@ export const EXCEPTIONS: Exception[] = [
       shipmentValue: '₹2.3L',
       slaStatus: 'ON WATCH',
       estimatedCost: '₹1,900',
+    },
+    workingCapital: {
+      lockedAmount: '₹2.3L',
+      lockedSince: '03h at QC line',
+      atRiskPromise: 'Brand’s weekend campaign fulfilment commitment',
     },
     resolutionPlan: [
       { step: 1, action: 'Create relabel work order for 42 cartons at VAC line 3', owner: 'Execution Agent', autonomy: 'auto' },
@@ -142,13 +172,15 @@ export const EXCEPTIONS: Exception[] = [
     status: 'new',
     confidence: 93,
     slaRisk: 'low',
+    clientSegment: 'msme_d2c',
+    clientName: 'MSME D2C brand (beauty)',
     rootCause: 'Consignee closed both attempt windows; driver GPS + photo confirm site closure, not address error',
     nextStep: 'Offer evening re-attempt slot to consignee via notification; auto-assign driver',
     evidenceTrail: [
       { label: 'Attempt log', value: '2 failed attempts (11:20, 16:45) — reason: SITE_CLOSED', source: 'last-mile app' },
       { label: 'Address validation', value: 'Geocode match 98.7% — address not the issue', source: 'address service' },
       { label: 'Proof of attempt', value: 'Driver photos show shutter closed both windows', source: 'last-mile app' },
-      { label: 'Historical pattern', value: 'Evening re-attempts succeed in 89% of SITE_CLOSED cases', source: '1,842 historical cases' },
+      { label: 'Historical pattern', value: 'Evening re-attempts succeed in 89% of SITE_CLOSED cases', source: '~1,800 historical cases' },
     ],
     businessImpact: {
       currentDelayHours: 6,
@@ -157,9 +189,55 @@ export const EXCEPTIONS: Exception[] = [
       slaStatus: 'ON TRACK',
       estimatedCost: '₹600',
     },
+    workingCapital: {
+      lockedAmount: '₹0.4L',
+      lockedSince: '6h since first attempt',
+      atRiskPromise: 'COD remittance cycle for the brand',
+    },
     resolutionPlan: [
       { step: 1, action: 'Send consignee re-attempt slot picker (SMS + WhatsApp)', owner: 'Execution Agent', autonomy: 'auto' },
       { step: 2, action: 'Auto-assign evening driver once slot confirmed', owner: 'Execution Agent', autonomy: 'auto' },
+    ],
+  },
+  {
+    id: 'HXL001361',
+    shipmentId: 'SHP-8867',
+    route: 'Gurugram → Bhiwandi VAC → Pune',
+    title: 'RTO pickup stuck — QC-fail return batch',
+    category: 'reverse_logistics',
+    severity: 'medium',
+    status: 'new',
+    confidence: 87,
+    slaRisk: 'medium',
+    clientSegment: 'msme_d2c',
+    clientName: 'MSME D2C brand (apparel)',
+    rootCause:
+      '42-unit apparel return batch failed inbound QC at Bhiwandi VAC on label/tag mismatch; RTO pickup line blocked and refund clock is running against the brand',
+    nextStep: 'Triage QC failures, route refundable units for approval and restockable units for relabel — refund SLA is the binding constraint',
+    evidenceTrail: [
+      { label: 'QC scan event', value: 'QC_FAIL on 42/42 returned units — tag/label mismatch vs listing', source: 'warehouse WMS' },
+      { label: 'RTO pipeline', value: 'Reverse pickup initiated 9 days ago; refund SLA window closes in 3 days', source: 'OMS reverse-logistics module' },
+      { label: 'Unit inspection', value: '31 units restockable after relabel; 11 units need refurb decision (minor wear)', source: 'VAC inspection log' },
+      { label: 'Historical pattern', value: 'Refund released within 24h of QC triage in 93% of return batches', source: '~1,800 historical cases' },
+    ],
+    businessImpact: {
+      currentDelayHours: 0,
+      predictedDelayRange: 'Refund SLA breach in 72h if untriaged',
+      shipmentValue: '₹1.6L',
+      slaStatus: 'AT RISK',
+      estimatedCost: '₹3,200 (re-fulfilment + handling)',
+    },
+    workingCapital: {
+      lockedAmount: '₹1.6L',
+      lockedSince: '9 days (reverse pickup initiated)',
+      atRiskPromise: 'Customer refund owed by the brand — cash out while inventory sits ungraded',
+    },
+    resolutionPlan: [
+      { step: 1, action: 'Auto-triage QC-failed units into restockable / refurbish / write-off with inspection photos', owner: 'Investigation Agent', autonomy: 'auto' },
+      { step: 2, action: 'Create relabel work order for 31 restockable units', owner: 'Execution Agent', autonomy: 'auto' },
+      { step: 3, action: 'Draft refurb-vs-RTV recommendation for 11 worn units', owner: 'Impact Agent', autonomy: 'recommend' },
+      { step: 4, action: 'Approve customer refunds for verified returnable units (financial action)', owner: 'Ops Executive', autonomy: 'human' },
+      { step: 5, action: 'Restock graded units and update brand’s returns dashboard', owner: 'Execution Agent', autonomy: 'auto' },
     ],
   },
   {
@@ -172,6 +250,8 @@ export const EXCEPTIONS: Exception[] = [
     status: 'resolved',
     confidence: 96,
     slaRisk: 'low',
+    clientSegment: 'enterprise',
+    clientName: 'Enterprise industrial-goods client',
     rootCause: 'Assessed duty used stale tariff row (pre-January rate); overcharge of ₹9,840 identified post-clearance',
     nextStep: 'Closed — refund filed, confirmed credited. Feeds evaluation set as verified outcome.',
     evidenceTrail: [
@@ -185,6 +265,11 @@ export const EXCEPTIONS: Exception[] = [
       shipmentValue: '₹6.1L',
       slaStatus: 'RESOLVED',
       estimatedCost: '₹9,840 recovered',
+    },
+    workingCapital: {
+      lockedAmount: '₹9,840',
+      lockedSince: 'Since duty assessment (recovered 22 Aug)',
+      atRiskPromise: 'Resolved — overpaid duty credited back to client ledger',
     },
     resolutionPlan: [
       { step: 1, action: 'Detect tariff-rate mismatch post-clearance', owner: 'Detection Agent', autonomy: 'auto' },

@@ -1,7 +1,9 @@
-import { ArrowLeft, ArrowRight, Link2, ShieldAlert } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ShieldAlert } from 'lucide-react'
+import { StepTracker } from '../components/StepTracker'
 import { EXCEPTIONS } from '../data/exceptions'
 import { Badge, SlaRiskBadge } from '../components/Badge'
-import type { Exception } from '../types'
+import { Button } from '../components/Button'
+import type { Exception, WorkingCapitalImpact } from '../types'
 
 function EvidenceRow({ index, label, value, source }: { index: number; label: string; value: string; source: string }) {
   return (
@@ -20,22 +22,41 @@ function EvidenceRow({ index, label, value, source }: { index: number; label: st
   )
 }
 
+const SEGMENT_LABEL: Record<Exception['clientSegment'], string> = {
+  msme_d2c: 'MSME · D2C',
+  enterprise: 'Enterprise',
+}
+
+/** Working-capital framing — makes Hexalog's MSME thesis visible per exception. */
+function WorkingCapitalCard({ wc }: { wc: WorkingCapitalImpact }) {
+  return (
+    <div className="rounded-card border border-brand-purple/20 bg-soft-lavender px-4 py-4">
+      <p className="text-[11px] font-bold uppercase tracking-widest text-brand-purple">
+        Working capital at stake
+      </p>
+      <p className="data mt-1.5 text-[17px] font-bold text-ink-900">{wc.lockedAmount}</p>
+      <p className="mt-0.5 text-[11.5px] text-ink-600">locked · {wc.lockedSince}</p>
+      <p className="mt-2 border-t border-brand-purple/10 pt-2 text-[11.5px] leading-relaxed text-ink-900">
+        {wc.atRiskPromise}
+      </p>
+    </div>
+  )
+}
+
 export function ExceptionDetail({
   exceptionId,
   onBack,
   onOpenAgents,
-  onOpenApproval,
 }: {
   exceptionId: string
   onBack: () => void
   onOpenAgents: () => void
-  onOpenApproval: () => void
 }) {
   const exception = EXCEPTIONS.find((e) => e.id === exceptionId) ?? EXCEPTIONS[0]
   const e: Exception = exception
 
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+  return (      <div className="pt-6 pb-6 sm:px-6 lg:px-8">
+        <StepTracker current="detail" />
       <button
         onClick={onBack}
         className="mb-4 flex items-center gap-1.5 text-[12.5px] font-semibold text-ink-600 transition-colors hover:text-brand-purple"
@@ -56,13 +77,16 @@ export function ExceptionDetail({
           </p>
         </div>
         <div className="flex flex-col items-end gap-2">
+          <span className="rounded-full border border-brand-purple/20 bg-brand-purple/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand-purple">
+            {SEGMENT_LABEL[e.clientSegment]}
+          </span>
           <SlaRiskBadge risk={e.slaRisk} />
           <Badge kind="severity" value={e.severity} size="xs" />
         </div>
       </header>
 
       {/* Summary strip */}
-      <div className="mb-6 grid grid-cols-4 gap-4">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="rounded-card border border-ink-900/8 bg-white p-4 shadow-card">
           <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Likely root cause</p>
           <p className="mt-1.5 text-[12.5px] font-medium leading-snug text-ink-900">{e.rootCause}</p>
@@ -86,7 +110,7 @@ export function ExceptionDetail({
       </div>
 
       {/* Two-column: evidence + plan | impact */}
-      <div className="grid grid-cols-[minmax(0,1fr)_320px] gap-5">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div>
           {/* Evidence trail */}
           <section>
@@ -100,7 +124,12 @@ export function ExceptionDetail({
 
           {/* Resolution plan */}
           <section className="mt-7">
-            <h2 className="mb-3 text-[15px] font-bold text-ink-900">Recommended resolution plan</h2>
+            <div className="mb-3 flex items-center justify-between gap-4">
+              <h2 className="text-[15px] font-bold text-ink-900">Recommended resolution plan</h2>
+              <Button onClick={onOpenAgents}>
+                Run agents <ArrowRight size={14} />
+              </Button>
+            </div>
             <div className="overflow-hidden rounded-card border border-ink-900/8 bg-white shadow-card">
               {e.resolutionPlan.map((step, i) => (
                 <div
@@ -115,13 +144,6 @@ export function ExceptionDetail({
                     <p className="mt-0.5 text-[11.5px] text-ink-600">Owner: {step.owner}</p>
                   </div>
                   <Badge kind="autonomy" value={step.autonomy} size="xs" />
-                  <button
-                    onClick={onOpenApproval}
-                    title="Proceed to approval"
-                    className="rounded-md p-1.5 text-ink-400 transition-colors hover:bg-soft-lavender hover:text-brand-purple"
-                  >
-                    <Link2 size={15} />
-                  </button>
                 </div>
               ))}
             </div>
@@ -130,15 +152,22 @@ export function ExceptionDetail({
             <p className="mt-3 flex items-start gap-1.5 text-[11.5px] leading-relaxed text-ink-600">
               <ShieldAlert size={13} className="mt-0.5 shrink-0 text-brand-violet" />
               Autonomy policy: low-risk actions can execute automatically; regulatory and customer-impacting
-              actions always require human approval.
+              actions always require human approval — executed on top of Hexalog's orchestration platform.
             </p>
+
+            {/* Guided next step */}
+            <div className="mt-6 flex items-center justify-end">
+              <Button size="lg" onClick={onOpenAgents}>
+                Run agents <ArrowRight size={15} />
+              </Button>
+            </div>
           </section>
         </div>
 
-        {/* Business impact — dark panel */}
+        {/* Business impact — white card */}
         <aside>
-          <div className="sticky top-6 rounded-card bg-navy p-5 shadow-elevated">
-            <h2 className="text-[11px] font-bold uppercase tracking-widest text-white/50">Business impact</h2>
+          <div className="sticky top-6 rounded-card border border-ink-900/8 bg-white p-5 shadow-card">
+            <h2 className="text-[11px] font-bold uppercase tracking-widest text-ink-400">Business impact</h2>
             <dl className="mt-4 flex flex-col gap-4">
               {[
                 { label: 'Current delay', value: `${e.businessImpact.currentDelayHours}h` },
@@ -148,10 +177,10 @@ export function ExceptionDetail({
                 { label: 'Estimated operational cost', value: e.businessImpact.estimatedCost },
               ].map((row) => (
                 <div key={row.label}>
-                  <dt className="text-[10px] font-bold uppercase tracking-widest text-white/45">{row.label}</dt>
+                  <dt className="text-[10px] font-bold uppercase tracking-widest text-ink-400">{row.label}</dt>
                   <dd
                     className={`data mt-0.5 text-[15px] font-semibold ${
-                      row.highlight ? 'text-soft-red' : 'text-white'
+                      row.highlight ? 'text-[#B03030]' : 'text-ink-900'
                     }`}
                   >
                     {row.value}
@@ -160,15 +189,27 @@ export function ExceptionDetail({
               ))}
             </dl>
 
-            <div className="mt-5 border-t border-white/10 pt-4">
-              <button
-                onClick={onOpenAgents}
-                className="group flex w-full items-center justify-center gap-2 rounded-lg bg-soft-yellow px-4 py-2.5 text-[13px] font-bold text-brand-darkest transition-transform hover:scale-[1.01]"
-              >
+            {e.workingCapital && (
+              <div className="mt-5">
+                <WorkingCapitalCard wc={e.workingCapital} />
+              </div>
+            )}
+
+            {e.workingCapital && (
+              <p className="mt-3 border-l-2 border-brand-purple/30 pl-3 text-[11px] italic leading-relaxed text-ink-600">
+                “What holds MSMEs back is rarely the product — it's the supply chain behind it.” Every cleared
+                exception releases working capital back to the client.
+                <span className="mt-0.5 block not-italic text-[10px] text-ink-400">
+                  — Dibyanshu Tripathi, CEO (YourStory feature)
+                </span>
+              </p>
+            )}
+
+            <div className="mt-5 border-t border-ink-900/8 pt-4">
+              <Button variant="secondary" className="w-full" onClick={onOpenAgents}>
                 View agent orchestration
-                <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-              </button>
-              <p className="mt-2.5 text-center text-[10.5px] leading-relaxed text-white/45">
+              </Button>
+              <p className="mt-2.5 text-center text-[10.5px] leading-relaxed text-ink-400">
                 How the six agents produced this analysis →
               </p>
             </div>

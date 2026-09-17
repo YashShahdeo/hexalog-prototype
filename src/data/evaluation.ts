@@ -1,6 +1,6 @@
 import type { EvaluationMetric, SimulationScenario } from '../types'
 
-/** ILLUSTRATIVE / SIMULATED — Definition-of-Do Done metrics for the concept eval set. */
+/** ILLUSTRATIVE / SIMULATED — Definition-of-Done metrics for the concept eval set. */
 export const EVALUATION_METRICS: EvaluationMetric[] = [
   { name: 'Root-cause accuracy', target: '≥ 90%', simulatedCurrent: '93.4%', status: 'pass' },
   { name: 'Task success rate (approved plans)', target: '≥ 95%', simulatedCurrent: '96.1%', status: 'pass' },
@@ -24,9 +24,9 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
   {
     id: 'hs-mismatch',
     name: 'HS code mismatch (ambiguous BOM)',
-    description: 'Two defensible classifications, 6.4% duty delta',
+    description: 'Ambiguous BOM, two defensible readings — filing itself was fully consistent',
     passed: false,
-    reason: 'Escalation required — regulatory risk exceeds autonomous-action threshold; routed to compliance specialist',
+    reason: 'Escalation by design — regulatory ambiguity exceeds the autonomous-action threshold; dossier compiled for the compliance specialist',
     agentConfidence: 71,
     taskSuccessPct: 88,
     criticalFailures: 0,

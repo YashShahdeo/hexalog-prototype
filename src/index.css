@@ -17,6 +17,11 @@ body {
   @apply font-mono text-[0.92em];
 }
 
+/* Dotted-underline affordance for hoverable source chips (evidence tooltips) */
+.data-hover {
+  @apply cursor-help border-b border-dotted border-ink-400/60;
+}
+
 /* Thin scrollbars for ledger/tables */
 .thin-scroll::-webkit-scrollbar {
   height: 8px;

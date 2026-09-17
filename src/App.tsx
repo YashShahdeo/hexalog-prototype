@@ -26,7 +26,7 @@ export default function App() {
   return (
     <div className="flex min-h-screen">
       <Sidebar active={view} onNavigate={setView} />
-      <main className="min-w-0 flex-1 overflow-x-hidden px-4 py-6 sm:px-6 lg:px-8">
+      <main className="min-w-0 flex-1 overflow-x-hidden pt-6 pb-6 sm:px-6 lg:px-8">
         {view === 'tower' && <ControlTower onOpenException={openException} />}
         {view === 'ledger' && <ExceptionLedger onOpenException={openException} />}
         {view === 'detail' && (
@@ -34,11 +34,14 @@ export default function App() {
             exceptionId={selectedExceptionId}
             onBack={() => setView('ledger')}
             onOpenAgents={() => setView('agents')}
-            onOpenApproval={() => setView('approval')}
           />
         )}
         {view === 'agents' && (
-          <AgentOrchestration exceptionId={selectedExceptionId} onBack={() => setView('detail')} />
+          <AgentOrchestration
+            exceptionId={selectedExceptionId}
+            onBack={() => setView('detail')}
+            onOpenApproval={() => setView('approval')}
+          />
         )}
         {view === 'approval' && (
           <ApprovalFlow
@@ -47,7 +50,7 @@ export default function App() {
             onOpenEval={() => setView('eval')}
           />
         )}
-        {view === 'eval' && <EvaluationSimulator />}
+        {view === 'eval' && <EvaluationSimulator onOpenRoadmap={() => setView('roadmap')} />}
         {view === 'roadmap' && <RoadmapRoi />}
       </main>
     </div>

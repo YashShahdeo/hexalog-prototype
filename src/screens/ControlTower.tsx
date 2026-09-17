@@ -1,7 +1,9 @@
+import { StepTracker } from '../components/StepTracker'
 import { EXCEPTIONS } from '../data/exceptions'
 import { PriorityExceptionCard } from '../components/ExceptionRow'
 import { StatCard } from '../components/StatCard'
 import { SimulatedDataNote } from '../components/SimulatedDataNote'
+import { AuthorFooter } from '../components/AuthorFooter'
 
 export function ControlTower({ onOpenException }: { onOpenException: (id: string) => void }) {
   const open = EXCEPTIONS.filter((e) => e.status !== 'resolved')
@@ -20,7 +22,8 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
     .slice(0, 4)
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+    <div className="pt-6 pb-6 sm:px-6 lg:px-8">
+      <StepTracker current="tower" />
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Control Tower</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
@@ -30,9 +33,9 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
 
       {/* Top stat row */}
       <div className="grid grid-cols-4 gap-4">
-        <StatCard label="Shipments in transit" value={312} sub="across 6 lanes" />
+        <StatCard label="Shipments in transit" value={312} sub="6 of 80+ lanes · filtered view" />
         <StatCard label="On track" value="284" sub="91.0% of network" tone="success" />
-        <StatCard label="At risk" value={atRisk + 14} sub="SLA exposure flagged" tone="warning" />
+        <StatCard label="At risk" value={atRisk} sub="SLA exposure flagged" tone="warning" />
         <StatCard label="Open exceptions" value={open.length} sub="queued for resolution" tone="danger" />
       </div>
 
@@ -60,6 +63,7 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
 
       <div className="mt-8">
         <SimulatedDataNote />
+        <AuthorFooter />
       </div>
     </div>
   )
