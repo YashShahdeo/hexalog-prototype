@@ -7,14 +7,6 @@ import { AuthorFooter } from '../components/AuthorFooter'
 
 type Phase = 'awaiting' | 'rejected' | 'executing' | 'verifying' | 'verified'
 
-const EXECUTION_ITEMS = [
-  { label: 'Invoice request sent to exporter (Document Agent)', detail: 'auto step · completed 2m after approval' },
-  { label: 'Invoice received & validated against packing list', detail: 'auto step · 14 line items, values matched' },
-  { label: 'Customs resubmission package prepared', detail: 'recommend step · drafted for review' },
-  { label: 'Resubmission approved & submitted (Compliance Specialist)', detail: 'human step · approved by Customs Compliance Specialist' },
-  { label: 'DOC_HOLD release confirmed, client ETA updated', detail: 'auto step · customs feed shows CLEARED' },
-]
-
 const LOOP_STEPS = ['Approve', 'Execute', 'Verify', 'Learn / evaluate']
 
 export function ApprovalFlow({
@@ -34,15 +26,19 @@ export function ApprovalFlow({
 
   useEffect(() => () => timers.current.forEach(clearTimeout), [])
 
+  // B1 — execution and verification are per-exception, never shared across cases
+  const executionItems = exception.executionItems
+  const verifyRows = exception.verifyOutcomes
+
   const startExecution = () => {
     if (phase !== 'awaiting') return
     setPhase('executing')
     // Staggered checklist reveal, 200ms apart (PRD: 150–250ms)
-    EXECUTION_ITEMS.forEach((_, i) => {
+    executionItems.forEach((_, i) => {
       timers.current.push(
         setTimeout(() => {
           setCompleted(i + 1)
-          if (i === EXECUTION_ITEMS.length - 1) {
+          if (i === executionItems.length - 1) {
             setPhase('verifying')
             timers.current.push(setTimeout(() => setPhase('verified'), 900))
           }
@@ -51,9 +47,9 @@ export function ApprovalFlow({
     })
   }
 
+  // B2 — render in the plan's own sequence; color encodes autonomy
+  const orderedSteps = [...exception.resolutionPlan].sort((a, b) => a.step - b.step)
   const humanSteps = exception.resolutionPlan.filter((s) => s.autonomy === 'human')
-  const recommendSteps = exception.resolutionPlan.filter((s) => s.autonomy === 'recommend')
-  const autoSteps = exception.resolutionPlan.filter((s) => s.autonomy === 'auto')
 
   return (
     <div className="pt-6 pb-6 sm:px-6 lg:px-8">
@@ -81,26 +77,47 @@ export function ApprovalFlow({
           </h2>
 
           <div className="mt-4 flex flex-col gap-2.5">
-            {autoSteps.map((s) => (
-              <div key={s.step} className="rounded-lg border border-ink-900/8 bg-soft-lavender/50 px-3.5 py-2.5">
-                <p className="text-[12.5px] font-medium leading-snug text-ink-900">{s.action}</p>
-                <p className="mt-1 text-[10.5px] text-ink-600">{s.owner}</p>
-              </div>
-            ))}
-            {recommendSteps.map((s) => (
-              <div key={s.step} className="rounded-lg border border-[#F0E1A0] bg-[#FDF6DC]/60 px-3.5 py-2.5">
-                <p className="text-[12.5px] font-medium leading-snug text-ink-900">{s.action}</p>
-                <p className="mt-1 text-[10.5px] text-ink-600">{s.owner}</p>
-              </div>
-            ))}
-            {humanSteps.map((s) => (
-              <div key={s.step} className="rounded-lg border-2 border-[#E5B8B8] bg-[#FDECEC] px-3.5 py-2.5">
-                <p className="text-[12.5px] font-semibold leading-snug text-[#8A2424]">{s.action}</p>
-                <p className="mt-1 text-[10.5px] font-medium text-[#B03030]">
-                  {s.owner} · requires sign-off
-                </p>
-              </div>
-            ))}
+            {orderedSteps.map((s) => {
+              const isHuman = s.autonomy === 'human'
+              const isRecommend = s.autonomy === 'recommend'
+              return (
+                <div
+                  key={s.step}
+                  className={`flex items-start gap-2.5 rounded-lg px-3.5 py-2.5 ${
+                    isHuman
+                      ? 'border-2 border-[#E5B8B8] bg-[#FDECEC]'
+                      : isRecommend
+                        ? 'border border-[#F0E1A0] bg-[#FDF6DC]/60'
+                        : 'border border-ink-900/8 bg-soft-lavender/50'
+                  }`}
+                >
+                  <span
+                    className={`data mt-0.5 shrink-0 text-[10px] font-bold ${
+                      isHuman ? 'text-[#B03030]' : isRecommend ? 'text-[#8A6D0A]' : 'text-ink-400'
+                    }`}
+                  >
+                    {String(s.step).padStart(2, '0')}
+                  </span>
+                  <div className="min-w-0">
+                    <p
+                      className={`text-[12.5px] leading-snug ${
+                        isHuman ? 'font-semibold text-[#8A2424]' : 'font-medium text-ink-900'
+                      }`}
+                    >
+                      {s.action}
+                    </p>
+                    <p
+                      className={`mt-1 text-[10.5px] ${
+                        isHuman ? 'font-medium text-[#B03030]' : 'text-ink-600'
+                      }`}
+                    >
+                      {s.owner}
+                      {isHuman ? ' · requires sign-off' : isRecommend ? ' · recommend' : ' · auto'}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
 
           <Button
@@ -142,6 +159,10 @@ export function ApprovalFlow({
               <p className="mt-1 text-[11px] leading-relaxed text-[#8A2424]">
                 Reason recorded to the audit log: “{rejectionReason}”
               </p>
+              <p className="mt-1.5 border-t border-[#E5B8B8]/60 pt-1.5 text-[10.5px] leading-relaxed text-[#8A2424]/80">
+                Rejection reason and plan diff are added to the eval set — override patterns tune the autonomy
+                threshold.
+              </p>
               <button
                 onClick={() => {
                   setRejectionReason('')
@@ -179,7 +200,7 @@ export function ApprovalFlow({
           )}
 
           <div className="mt-4 flex flex-col gap-2.5">
-            {EXECUTION_ITEMS.map((item, i) => {
+            {executionItems.map((item, i) => {
               const done = i < completed
               return (
                 <div
@@ -212,13 +233,7 @@ export function ApprovalFlow({
           </h2>
 
           <dl className="mt-4 flex flex-col gap-3">
-            {[
-              { label: 'Customs status', final: 'DOC_HOLD cleared' },
-              { label: 'Carrier status', final: 'Terminal gate-out confirmed' },
-              { label: 'ETA', final: 'Restored — 18 Sep, 14:00 IST' },
-              { label: 'Customer notified', final: 'Yes — revised ETA sent' },
-              { label: 'SLA status', final: 'Recovered — on track' },
-            ].map((row) => {
+            {verifyRows.map((row) => {
               const show = phase === 'verified'
               return (
                 <div key={row.label} className="flex items-center justify-between gap-3 border-b border-ink-900/6 pb-3 last:border-b-0 last:pb-0">
@@ -236,7 +251,7 @@ export function ApprovalFlow({
             {phase === 'verified' ? (
               <div className="animate-fadeSlideIn flex items-center justify-center gap-2 rounded-lg bg-[#E6F5EC] px-4 py-3">
                 <CheckCircle2 size={17} className="text-success" />
-                <span className="text-[13.5px] font-bold text-success">Resolution verified · 96%</span>
+                <span className="text-[13.5px] font-bold text-success">Resolution verified · {exception.verifyScore}%</span>
               </div>
             ) : (
               <div className="flex items-center justify-center gap-2 rounded-lg border border-ink-900/8 bg-soft-lavender/50 px-4 py-3">

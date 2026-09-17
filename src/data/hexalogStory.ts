@@ -59,7 +59,7 @@ export const PLATFORM_BRIDGE =
 
 /**
  * §3.1 — the assumptions surface. Naming what is assumed vs known vs simulated
- * is a product-management skill, not a weakness. Shown via the Assumptions badge
+ * is a product-management skill. Shown via the Assumptions badge
  * in the header of every screen.
  */
 export const ASSUMPTIONS = {

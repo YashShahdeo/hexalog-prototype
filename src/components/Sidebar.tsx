@@ -44,11 +44,7 @@ export function Sidebar({
 }) {
   // Highlight the closest nav item for screens without their own entry.
   const effectiveActive: ViewId =
-    active === 'detail' || active === 'approval'
-      ? 'ledger'
-      : active === 'taxonomy'
-        ? 'eval'
-        : active
+    active === 'detail' || active === 'approval' ? 'ledger' : active
 
   return (
     <aside className="sticky top-0 flex h-screen w-60 shrink-0 flex-col border-r border-ink-900/8 bg-white px-3 py-5">

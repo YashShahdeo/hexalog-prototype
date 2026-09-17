@@ -55,11 +55,11 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
       {/* Outcome strip — §2.8(a): outcomes, not just counts */}
       <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-card border border-ink-900/8 bg-white px-4 py-3 shadow-card">
         <span className="text-[12px] font-semibold text-ink-600">This week (simulated):</span>
-        <span className="data text-[13px] font-bold text-success">41 auto-resolved</span>
+        <span className="data text-[13px] font-bold text-success">9 auto-resolved</span>
         <span className="text-ink-400">·</span>
-        <span className="data text-[13px] font-bold text-[#8A6D0A]">9 escalated</span>
+        <span className="data text-[13px] font-bold text-[#8A6D0A]">17 escalated</span>
         <span className="text-ink-400">·</span>
-        <span className="data text-[13px] font-bold text-brand-purple">14.2 ops-hours returned</span>
+        <span className="data text-[13px] font-bold text-brand-purple">21 ops-hours returned</span>
       </div>
 
       {/* Priority exceptions */}

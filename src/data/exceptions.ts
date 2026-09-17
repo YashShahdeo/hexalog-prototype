@@ -24,7 +24,7 @@ export const EXCEPTIONS: Exception[] = [
       'Amended filing rejected → +24h dwell, demurrage exposure, and a second customs touch on the same shipment.',
     evidenceTrail: [
       { label: 'Customs event', value: 'DOC_HOLD — missing commercial invoice', source: 'customs feed' },
-      { label: 'Document store check', value: '0 invoices found for SHP-8842 (4 other docs present)', source: 'OMS document store' },
+      { label: 'Document store check', value: '0 invoices found for SHP-8842 (4 other docs present)', source: 'platform document store' },
       { label: 'Carrier milestone', value: 'Arrived Nhava Sheva 05:58 IST, held at terminal', source: 'carrier API' },
       { label: 'Historical pattern', value: '94% of DOC_HOLD shipments with missing invoice resolve in 18–24h after upload', source: '~1,800 historical cases' },
       { label: 'Exporter comms', value: 'No invoice sent in last 72h (email + portal checked)', source: 'comms log' },
@@ -48,6 +48,21 @@ export const EXCEPTIONS: Exception[] = [
       { step: 4, action: 'Submit resubmission to customs portal (regulatory action)', owner: 'Customs Compliance Specialist', autonomy: 'human' },
       { step: 5, action: 'Confirm DOC_HOLD release and update client ETA', owner: 'Execution Agent', autonomy: 'auto' },
     ],
+    executionItems: [
+      { label: 'Invoice request sent to exporter (Document Agent)', detail: 'auto step · completed 2m after approval' },
+      { label: 'Invoice received & validated against packing list', detail: 'auto step · 14 line items, values matched' },
+      { label: 'Customs resubmission package prepared', detail: 'recommend step · drafted for review' },
+      { label: 'Resubmission approved & submitted (Compliance Specialist)', detail: 'human step · approved by Customs Compliance Specialist' },
+      { label: 'DOC_HOLD release confirmed, client ETA updated', detail: 'auto step · customs feed shows CLEARED' },
+    ],
+    verifyOutcomes: [
+      { label: 'Customs status', final: 'DOC_HOLD cleared' },
+      { label: 'Carrier status', final: 'Terminal gate-out confirmed' },
+      { label: 'ETA', final: 'Restored — 18 Sep, 14:00 IST' },
+      { label: 'Customer notified', final: 'Yes — revised ETA sent' },
+      { label: 'SLA status', final: 'Recovered — on track' },
+    ],
+    verifyScore: 96,
   },
   {
     id: 'HXL001351',
@@ -69,7 +84,7 @@ export const EXCEPTIONS: Exception[] = [
     wrongCost:
       'Wrong reclassification → duty shortfall plus penalty exposure; repeated errors carry licence risk. This is why the step is human-gated.',
     evidenceTrail: [
-      { label: 'Filing accuracy check', value: 'Declaration consistent with all submitted documents — exposure is inherent BOM ambiguity, not a filing error', source: 'OMS document store' },
+      { label: 'Filing accuracy check', value: 'Declaration consistent with all submitted documents — exposure is inherent BOM ambiguity, not a filing error', source: 'platform document store' },
       { label: 'Classification scan', value: 'Declared 8448.11 vs BOM-implied 8448.20 (two defensible readings)', source: 'classification rules' },
       { label: 'Duty impact', value: '6.4% duty delta ≈ ₹31,200 exposure if reclassified', source: 'tariff table' },
       { label: 'Historical rulings', value: '3 of 5 similar BOMs classified under 8448.20', source: '~1,800 historical cases' },
@@ -91,6 +106,19 @@ export const EXCEPTIONS: Exception[] = [
       { step: 2, action: 'Specialist reviews dossier and confirms/rejects reclassification', owner: 'Customs Compliance Specialist', autonomy: 'human' },
       { step: 3, action: 'If confirmed: file amended declaration (regulatory action)', owner: 'Customs Agent', autonomy: 'human' },
     ],
+    executionItems: [
+      { label: 'Classification dossier compiled (Investigation Agent)', detail: 'auto step · BOM, supplier spec, 5 prior rulings attached' },
+      { label: 'Dossier reviewed — reclassification confirmed (Compliance Specialist)', detail: 'human step · approved by Customs Compliance Specialist' },
+      { label: 'Amended declaration filed (Customs Agent)', detail: 'human-gated filing · executed under recorded sign-off' },
+    ],
+    verifyOutcomes: [
+      { label: 'Declaration status', final: 'Amended filing accepted — 8448.20' },
+      { label: 'Duty delta', final: '₹31,200 provision settled, no penalty' },
+      { label: 'Classification ruling', final: 'Logged for future BOMs from this shipper' },
+      { label: 'Client notified', final: 'Yes — duty impact note sent' },
+      { label: 'SLA status', final: 'Recovered — no dwell added' },
+    ],
+    verifyScore: 94,
   },
   {
     id: 'HXL001339',
@@ -131,6 +159,19 @@ export const EXCEPTIONS: Exception[] = [
       { step: 2, action: 'Client notification with revised ETA and options', owner: 'Ops Executive', autonomy: 'recommend' },
       { step: 3, action: 'Book feeder if client approves incremental cost', owner: 'Execution Agent', autonomy: 'auto' },
     ],
+    executionItems: [
+      { label: 'Feeder quote requested via partner network (Investigation Agent)', detail: 'auto step · Mundra option returned in 4m' },
+      { label: 'Client notified with revised ETA and options (Ops Executive)', detail: 'recommend step · client approved +₹14,000 routing' },
+      { label: 'Feeder slot booked, manifest updated (Execution Agent)', detail: 'auto step · saves 18h vs original schedule' },
+    ],
+    verifyOutcomes: [
+      { label: 'Routing status', final: 'Feeder booked via Mundra' },
+      { label: 'ETA', final: 'Recovered 18h of the 26h slip' },
+      { label: 'Incremental cost', final: '₹14,000 — within client-approved ceiling' },
+      { label: 'Client notified', final: 'Yes — options + revised ETA acknowledged' },
+      { label: 'SLA status', final: 'Recovered — launch window held' },
+    ],
+    verifyScore: 97,
   },
   {
     id: 'HXL001355',
@@ -150,7 +191,7 @@ export const EXCEPTIONS: Exception[] = [
       'Wrong release → mis-labelled cartons ship to the end customer; return cost plus brand damage on the client’s marketplace rating.',
     evidenceTrail: [
       { label: 'QC scan event', value: 'LABEL_MISMATCH on 42/380 cartons, line 3', source: 'warehouse WMS' },
-      { label: 'Label registry', value: 'Barcode prefix belongs to SKU batch #A-2211 (superseded)', source: 'OMS document store' },
+      { label: 'Label registry', value: 'Barcode prefix belongs to SKU batch #A-2211 (superseded)', source: 'platform document store' },
       { label: 'Inventory match', value: 'Cartons physically match ordered SKUs — label-only defect', source: 'warehouse WMS' },
       { label: 'Historical pattern', value: 'Relabel tasks complete in avg 2.1h; no downstream impact if released today', source: '~1,800 historical cases' },
     ],
@@ -171,6 +212,19 @@ export const EXCEPTIONS: Exception[] = [
       { step: 2, action: 'Re-scan cartons against SKU manifest after relabel', owner: 'Execution Agent', autonomy: 'auto' },
       { step: 3, action: 'Release pick and confirm dispatch slot', owner: 'Execution Agent', autonomy: 'auto' },
     ],
+    executionItems: [
+      { label: 'Relabel work order created at VAC line 3 (Execution Agent)', detail: 'auto step · 42 cartons queued, 2.1h avg cycle' },
+      { label: 'Cartons re-scanned against SKU manifest', detail: 'auto step · 42/42 labels matched' },
+      { label: 'Pick released, dispatch slot confirmed', detail: 'auto step · weekend campaign window protected' },
+    ],
+    verifyOutcomes: [
+      { label: 'QC status', final: 'LABEL_MISMATCH cleared — 42/42 passed' },
+      { label: 'Inventory accuracy', final: 'Manifest match confirmed post-relabel' },
+      { label: 'Dispatch slot', final: 'Confirmed — campaign fulfilment intact' },
+      { label: 'Client notified', final: 'Yes — QC note sent to brand ops' },
+      { label: 'SLA status', final: 'Recovered — no downstream impact' },
+    ],
+    verifyScore: 98,
   },
   {
     id: 'HXL001358',
@@ -210,6 +264,18 @@ export const EXCEPTIONS: Exception[] = [
       { step: 1, action: 'Send consignee re-attempt slot picker (SMS + WhatsApp)', owner: 'Execution Agent', autonomy: 'auto' },
       { step: 2, action: 'Auto-assign evening driver once slot confirmed', owner: 'Execution Agent', autonomy: 'auto' },
     ],
+    executionItems: [
+      { label: 'Re-attempt slot picker sent (SMS + WhatsApp)', detail: 'auto step · consignee picked 19:30 window' },
+      { label: 'Evening driver auto-assigned to slot', detail: 'auto step · route optimised, 2 stops added' },
+    ],
+    verifyOutcomes: [
+      { label: 'Delivery status', final: 'Delivered — third attempt, 19:42' },
+      { label: 'Proof of delivery', final: 'Photo + OTP captured' },
+      { label: 'COD remittance', final: 'Unblocked — enters today cycle' },
+      { label: 'Customer notified', final: 'Yes — delivery confirmation sent' },
+      { label: 'SLA status', final: 'Recovered — within promise window' },
+    ],
+    verifyScore: 99,
   },
   {
     id: 'HXL001361',
@@ -230,7 +296,7 @@ export const EXCEPTIONS: Exception[] = [
       'Wrong disposition → sellable inventory scrapped, or unsellable stock restocked and re-shipped.',
     evidenceTrail: [
       { label: 'QC scan event', value: 'QC_FAIL on 42/42 returned units — tag/label mismatch vs listing', source: 'warehouse WMS' },
-      { label: 'RTO pipeline', value: 'Reverse pickup initiated 9 days ago; refund SLA window closes in 3 days', source: 'OMS reverse-logistics module' },
+      { label: 'RTO pipeline', value: 'Reverse pickup initiated 9 days ago; refund SLA window closes in 3 days', source: 'platform reverse-logistics module' },
       { label: 'Unit inspection', value: '31 units restockable after relabel; 11 units need refurb decision (minor wear)', source: 'VAC inspection log' },
       { label: 'Historical pattern', value: 'Refund released within 24h of QC triage in 93% of return batches', source: '~1,800 historical cases' },
     ],
@@ -253,6 +319,21 @@ export const EXCEPTIONS: Exception[] = [
       { step: 4, action: 'Approve customer refunds for verified returnable units (financial action)', owner: 'Ops Executive', autonomy: 'human' },
       { step: 5, action: 'Restock graded units and update brand’s returns dashboard', owner: 'Execution Agent', autonomy: 'auto' },
     ],
+    executionItems: [
+      { label: 'QC-failed units auto-triaged with inspection photos (Investigation Agent)', detail: 'auto step · 31 restockable / 11 refurb decision' },
+      { label: 'Relabel work order created for 31 units', detail: 'auto step · queued at Bhiwandi VAC' },
+      { label: 'Refurb-vs-RTV recommendation drafted for 11 units', detail: 'recommend step · economics attached' },
+      { label: 'Refunds approved for verified returnable units (Ops Executive)', detail: 'human step · approved by Ops Executive — refund SLA met' },
+      { label: 'Graded units restocked, returns dashboard updated', detail: 'auto step · brand portal reflects new status' },
+    ],
+    verifyOutcomes: [
+      { label: 'Refund status', final: 'Released — within 24h of triage (SLA met)' },
+      { label: 'Inventory status', final: '31 units restocked, 11 pending refurb decision' },
+      { label: 'Brand portal', final: 'Returns dashboard updated in real time' },
+      { label: 'Client notified', final: 'Yes — refund + restock summary sent' },
+      { label: 'SLA status', final: 'Recovered — refund clock stopped' },
+    ],
+    verifyScore: 95,
   },
   {
     id: 'HXL001329',
@@ -293,6 +374,20 @@ export const EXCEPTIONS: Exception[] = [
       { step: 3, action: 'Compliance approval of refund filing (regulatory action)', owner: 'Customs Compliance Specialist', autonomy: 'human' },
       { step: 4, action: 'File claim and confirm credit — completed 22 Aug', owner: 'Execution Agent', autonomy: 'auto' },
     ],
+    executionItems: [
+      { label: 'Tariff mismatch detected post-clearance (Detection Agent)', detail: 'auto step · stale tariff row flagged' },
+      { label: 'Refund claim dossier prepared', detail: 'auto step · BOE ref attached' },
+      { label: 'Refund filing approved (Compliance Specialist)', detail: 'human step · approved by Customs Compliance Specialist' },
+      { label: 'Claim filed, credit confirmed 22 Aug', detail: 'auto step · ₹9,840 credited to client ledger' },
+    ],
+    verifyOutcomes: [
+      { label: 'Refund status', final: '₹9,840 credited — case closed' },
+      { label: 'Tariff table', final: 'Row corrected for future filings' },
+      { label: 'Client ledger', final: 'Credit confirmed by finance' },
+      { label: 'Client notified', final: 'Yes — recovery note sent' },
+      { label: 'SLA status', final: 'Resolved — feeds eval set as verified outcome' },
+    ],
+    verifyScore: 100,
   },
 ]
 

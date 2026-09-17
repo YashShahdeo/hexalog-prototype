@@ -28,6 +28,11 @@ export function ExceptionTaxonomy() {
         </p>
       </header>
 
+      <p className="mb-3 text-[11.5px] leading-relaxed text-ink-600">
+        All dimensions scored 1–5. Higher RISK = more dangerous to automate.{' '}
+        <span className="font-semibold text-ink-900">Priority = Freq + Repeat + Value − Risk.</span>
+      </p>
+
       <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
         <table className="w-full min-w-[760px] overflow-hidden rounded-card border border-ink-900/8 bg-white text-left shadow-card">
           <thead>

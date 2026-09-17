@@ -9,8 +9,11 @@ import type { Exception, WorkingCapitalImpact } from '../types'
 /** Production-integration context for each evidence source — hover for the honest status. */
 const SOURCE_NOTES: Record<string, string> = {
   'customs feed': 'EDI / customs portal feed in production — integration assumed, to be confirmed Week 1',
-  'OMS document store': 'Existing platform document store — assumed accessible via internal API',
-  'OMS reverse-logistics module': 'Existing platform reverse-logistics data — assumed accessible via internal API',
+  'platform document store': 'Existing platform document store — assumed accessible via internal API',
+  'platform reverse-logistics module': 'Existing platform reverse-logistics data — assumed accessible via internal API',
+  'VAC inspection log': 'Value-Add Centre inspection records — presumed live; Hexalog operates 6+ VACs',
+  'address service': 'Geocoding / address validation service — third-party, integration assumed',
+  'finance system': 'Client ledger / finance system — assumed accessible via internal API',
   'carrier API': 'Carrier milestone API — Hexalog already surfaces real-time tracking, so this feed is presumed live',
   'port data feed': 'Port congestion / schedule data — third-party feed, integration assumed',
   'Hexalog partner network': 'Partner-network quoting API — assumed via platform integrations',
@@ -20,9 +23,6 @@ const SOURCE_NOTES: Record<string, string> = {
   'comms log': 'Email / portal communication log — integration assumed',
   'warehouse WMS': 'WMS scan events — Hexalog operates VACs with 99.5% inventory accuracy, so scan data is presumed live',
   'last-mile app': 'Driver-app events — Hexalog already manages last-mile exception flows, so this feed is presumed live',
-  'address service': 'Address validation service — commodity API, low integration risk',
-  'VAC inspection log': 'Value-Add Centre inspection records — assumed via WMS integration',
-  'finance system': 'Client-ledger / finance system — read-only integration assumed',
 }
 const DEFAULT_SOURCE_NOTE = 'Production system mapping is an assumption — to be confirmed in Week 1.'
 
@@ -192,7 +192,7 @@ export function ExceptionDetail({
             <p className="mt-3 flex items-start gap-1.5 text-[11.5px] leading-relaxed text-ink-600">
               <ShieldAlert size={13} className="mt-0.5 shrink-0 text-brand-violet" />
               Autonomy policy: low-risk actions can execute automatically; regulatory and customer-impacting
-              actions always require human approval — executed on top of Hexalog's orchestration platform.
+              actions always require human approval — executed on top of Hexalog's orchestration platform (assumed integration — see Assumptions).
             </p>
 
             {/* Guided next step */}

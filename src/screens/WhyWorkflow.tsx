@@ -106,7 +106,7 @@ export function WhyWorkflow({ onEnter }: { onEnter: () => void }) {
         <p className="mt-4 text-[13px] leading-relaxed text-white/70">
           <span className="font-semibold text-white">Scope:</span> this prototype goes deep on one class — customs
           DOC_HOLD on the India–China and India–Middle East lanes, the corridors Hexalog runs today. The same
-          pattern extends to Vietnam, Thailand and the Middle East as those lanes open.
+          pattern extends to Vietnam, Thailand and Oceania as those lanes open.
         </p>
 
         <p className="mt-4 text-[13px] leading-relaxed text-white/70">

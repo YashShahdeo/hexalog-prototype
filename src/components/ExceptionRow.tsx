@@ -104,24 +104,26 @@ export function LedgerRow({
       onClick={() => onOpen(exception.id)}
       className="group w-full border-b border-ink-900/6 px-5 py-3.5 text-left transition-colors last:border-b-0 hover:bg-soft-lavender/60"
     >
-      {/* Desktop: table row */}
-      <span className="hidden w-full grid-cols-[90px_minmax(0,1fr)_90px_90px_90px_100px_100px] items-center gap-4 md:grid">
+      {/* Desktop: table row — B3: exception column keeps ≥260px; secondary columns compress */}
+      <span className="hidden w-full grid-cols-[86px_minmax(260px,1fr)_92px_108px_84px_148px] items-center gap-3 md:grid">
         <Badge kind="severity" value={exception.severity} size="xs" />
         <span className="block min-w-0">
-          <span className="block truncate text-[14px] font-semibold text-ink-900">{exception.title}</span>
+          <span className="block truncate text-[14px] font-semibold text-ink-900" title={exception.title}>
+            {exception.title}
+          </span>
           <span className="block truncate text-[12px] text-ink-600">
             <span className="data">{exception.id}</span> · {exception.route}
           </span>
         </span>
-        <CategoryLabel category={exception.category} />
         <AutonomyChip plan={exception.resolutionPlan} />
         <span className="data text-[13px] font-semibold text-ink-900">{exception.confidence}%</span>
-        <span className="flex items-center gap-1.5">
+        <CategoryLabel category={exception.category} />
+        <span className="flex items-center justify-end gap-1.5">
           <SegmentChip segment={exception.clientSegment} />
           <Badge kind="status" value={exception.status} size="xs" />
-        </span>
-        <span className="flex items-center justify-end gap-1 text-[12px] font-semibold text-brand-purple opacity-0 transition-opacity group-hover:opacity-100">
-          Open <ArrowRight size={13} />
+          <span className="flex items-center gap-1 text-[12px] font-semibold text-brand-purple opacity-0 transition-opacity group-hover:opacity-100">
+            Open <ArrowRight size={13} />
+          </span>
         </span>
       </span>
 

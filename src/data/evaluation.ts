@@ -84,7 +84,7 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     passed: false,
     outcome: 'failure',
     reason:
-      'FAILED — CAUGHT AT VERIFICATION. Investigation Agent attributed the delay to port congestion at 91% confidence. Post-execution verification found the shipment was under DOC_HOLD the whole time — the congestion was real but was not the binding constraint. Exception reopened, case added to the eval set, confidence threshold for single-source carrier attribution raised.',
+      'Investigation Agent attributed the delay to port congestion at 91% confidence. Post-execution verification found the shipment was under DOC_HOLD the whole time — the congestion was real but was not the binding constraint. Exception reopened, case added to the eval set, confidence threshold for single-source carrier attribution raised.',
     escalationPath:
       'Verification catches it, not the human — this is why post-execution checks are a hard gate and not a formality. The case becomes eval data; the pattern (single-source attribution when a second system disagrees) becomes a detection rule.',
     agentConfidence: 91,

@@ -34,6 +34,18 @@ export interface ResolutionStep {
   autonomy: AutonomyLevel
 }
 
+/** Execution-checklist row (ApprovalFlow column 2) — per exception, in plan-step order */
+export interface ExecutionItem {
+  label: string
+  detail: string
+}
+
+/** Post-execution verification row (ApprovalFlow column 3) — per exception */
+export interface VerifyOutcome {
+  label: string
+  final: string
+}
+
 export interface Exception {
   id: string
   shipmentId: string
@@ -62,6 +74,13 @@ export interface Exception {
   clientName: string
   workingCapital?: WorkingCapitalImpact
   resolutionPlan: ResolutionStep[]
+
+  /** Per-exception execution checklist — derives from the resolution plan, never shared across cases */
+  executionItems: ExecutionItem[]
+  /** Per-exception post-execution verification outcomes */
+  verifyOutcomes: VerifyOutcome[]
+  /** Post-execution verification score shown on the Verify card */
+  verifyScore: number
 }
 
 export interface AgentSourceInfo {

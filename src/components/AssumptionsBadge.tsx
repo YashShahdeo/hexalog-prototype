@@ -76,7 +76,7 @@ export function AssumptionsBadge() {
             </div>
 
             <p className="mt-3 border-t border-ink-900/6 pt-2 text-[10.5px] italic text-ink-400">
-              Naming your own assumptions is a product-management skill, not a weakness.
+              Stated so it can be checked, not assumed away.
             </p>
           </div>
         </>

@@ -10,7 +10,7 @@ Script for the Loom recording you'll link in the cold email. **4 minutes, hard c
 - **Gap:** their platform detects and validates; resolution is still the ops team's manual scramble.
 - **Proof:** a resolution layer ON their orchestration platform — evidence trails, agent boundaries, human-gated regulatory steps, and a measured evaluation harness.
 - **The number:** ~230 ops hours and ₹4.2L avoided per 100 exceptions/month (simulated model, assumptions labeled).
-- **Close:** 20 minutes with you or Vineet's team — or just open the link; the hero case runs end to end. Happy to be wrong about the architecture assumptions.
+- **Close:** I'd value the critique either way — particularly on the architecture assumptions, which are all listed in the badge. Happy to be wrong; the link shows my working either way.
 
 ---
 
@@ -18,10 +18,11 @@ Script for the Loom recording you'll link in the cold email. **4 minutes, hard c
 
 | # | Time | Screen | What to show | What to say |
 |---|------|--------|--------------|-------------|
-| 1 | 0:00–0:35 | **Exception Detail** (HXL001351, Shanghai → Mumbai) | One exception end to end: topNote callout (filing accuracy defended), evidence trail, working-capital card | "One customs DOC_HOLD on a lane you run today. Every claim is cited. Note the framing: your 100% HS filing accuracy isn't in question — the exposure is the shipper's BOM ambiguity. And for an MSME brand this is locked working capital, not a delay." |
+| 1 | 0:00–0:25 | **Exception Detail** (HXL001348, Shanghai → Mumbai — the DOC_HOLD hero) | Evidence trail top to bottom, then the working-capital card | "One customs DOC_HOLD on a lane you run today. Every claim is cited — and for an MSME brand this isn't an ₹8,400 delay, it's ₹4.8L of locked working capital and a broken customer promise." |
+| 1b | 0:25–0:35 | **Exception Detail** (HXL001351, Shenzhen → Delhi) | Jump only for the topNote — "READ THIS FIRST" filing-accuracy framing | "And this is the one I deliberately excluded from automation: HS classification. Your 100% filing accuracy isn't in question — the exposure is the shipper's BOM ambiguity, so the agent compiles the dossier and a specialist decides." |
 | 2 | 0:35–1:05 | **AI Agents** | Six agent cards — land on the red **Must never** rows | "Six narrow agents on your orchestration platform — not a parallel system. Each has boundaries. The Document Agent can't touch a government portal. Execution can't file without recorded human sign-off." |
 | 3 | 1:05–1:35 | **Evaluation — Definition of Done** | **Stop on the FAIL row** (human override 11.3% vs ≤10%) | "The one metric we currently miss — deliberately. The threshold is conservative because escalation by design beats silent failure. Tuning it is a roadmap decision, not a demo fix." |
-| 4 | 1:35–2:00 | **Approve → Execute → Verify** | Type a rejection reason, hit **Reject plan — send back with reason**; show the halted state; then Reset, Approve, watch it run and verify | "The human gate is real — reject the plan and nothing executes; the reason lands in the audit log. Approve, and regulatory steps stay human while agents run the rest — verified, not assumed." |
+| 4 | 1:35–2:00 | **Approve → Execute → Verify** (record on HXL001348 only — the hero case) | Type a rejection reason, hit **Reject plan — send back with reason**; show the halted state; then Reset, Approve, watch it run and verify | "The human gate is real — reject the plan and nothing executes; the reason lands in the audit log and feeds the eval set. Approve, and regulatory steps stay human while agents run the rest — verified, not assumed." |
 | 5 | 2:00–2:40 | **Simulator** | Run **Mis-attributed root cause** — the failure scenario | "And this is the agent being wrong: 91% confident, wrong anyway — caught at verification, not by a customer. Critical failures still zero because the architecture contains it. The case becomes eval data and a new detection rule." |
 | 6 | 2:40–3:00 | **Assumptions badge** (header, any screen) | Open the popover — three columns: assumed / known / simulated | "Everything I've assumed about your internals is here, flagged for validation in week one. Naming assumptions is the job." |
 | 7 | 3:00–3:30 | **Taxonomy** | The scored selection table | "Why DOC_HOLD and not the other six classes — scored on frequency, repeatability, value, and the cost of being wrong. HS ambiguity scores lowest: assistive only, a specialist decides." |
@@ -34,7 +35,7 @@ Script for the Loom recording you'll link in the cold email. **4 minutes, hard c
 - **Resolution:** 1920×1080, browser zoom 100–110%, hide bookmarks bar.
 - **Cursor:** deliberate moves; pause half a beat before each scroll so cuts are clean.
 - **Keep real-time pacing** only on the Approval execution animation (shot 4) — trim everything else.
-- **GIF alternative:** shots 1→4 (~2 min is too long for a GIF; use shots 3→5, ~65s) if the email needs an inline visual; link the Loom for the full pass.
+- **GIF alternative:** shots 3→5 only (FAIL row → reject path → agent-wrong scenario), ~65s. That sequence carries the judgment; link the Loom for the full pass.
 - **First frame of shot 1** doubles as the email thumbnail.
 - Say the simulated-data disclaimer once (shot 1), not repeatedly.
 - Don't mention hexalog.com — only hexalog.in matters here.
