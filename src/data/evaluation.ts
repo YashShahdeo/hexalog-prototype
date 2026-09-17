@@ -18,6 +18,7 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     name: 'Missing commercial invoice',
     description: 'DOC_HOLD at customs; exporter unresponsive for 24h',
     passed: true,
+    outcome: 'pass',
     escalationPath:
       'Pass → next autonomy step: with the override rate trending under target, this class is the candidate for end-to-end autonomous resolution at Phase 4.',
     agentConfidence: 84,
@@ -29,6 +30,7 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     name: 'HS code mismatch (ambiguous BOM)',
     description: 'Ambiguous BOM, two defensible readings — filing itself was fully consistent',
     passed: false,
+    outcome: 'escalation',
     reason:
       'Escalation by design — regulatory ambiguity exceeds the autonomous-action threshold; dossier compiled for the compliance specialist',
     escalationPath:
@@ -42,6 +44,7 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     name: 'Carrier delay (port congestion)',
     description: 'Berthing slip +26h; feeder alternative available',
     passed: true,
+    outcome: 'pass',
     escalationPath:
       'Pass → next autonomy step: client-approval requirement stays for the incremental-cost decision; detection-to-option time is the metric to shrink next.',
     agentConfidence: 91,
@@ -53,6 +56,7 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     name: 'Conflicting ETA sources',
     description: 'Carrier API and client portal report ETAs 14h apart',
     passed: true,
+    outcome: 'pass',
     escalationPath:
       'Pass → next autonomy step: source-precedence rules become codified policy once the eval set shows ≥95% agreement with ops judgment.',
     agentConfidence: 87,
@@ -64,6 +68,7 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     name: 'High-value shipment (₹25L+)',
     description: 'Financial-impact threshold crossed on duty correction',
     passed: false,
+    outcome: 'escalation',
     reason:
       'Escalation required — shipment value above autonomous financial-action ceiling; approval mandatory',
     escalationPath:
@@ -77,6 +82,7 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     name: 'Mis-attributed root cause',
     description: 'Carrier delay masked an upstream documentation gap',
     passed: false,
+    outcome: 'failure',
     reason:
       'FAILED — CAUGHT AT VERIFICATION. Investigation Agent attributed the delay to port congestion at 91% confidence. Post-execution verification found the shipment was under DOC_HOLD the whole time — the congestion was real but was not the binding constraint. Exception reopened, case added to the eval set, confidence threshold for single-source carrier attribution raised.',
     escalationPath:

@@ -40,7 +40,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
       </div>
 
       {/* Top two-panel section */}
-      <div className="grid grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-5">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         {/* Agent performance table */}
         <section className="overflow-hidden rounded-card border border-ink-900/8 bg-white shadow-card">
           <div className="border-b border-ink-900/8 bg-soft-lavender/60 px-5 py-3">
@@ -127,12 +127,20 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
       {result && (
         <section
           className={`mt-6 animate-fadeSlideIn overflow-hidden rounded-card border shadow-card ${
-            result.passed ? 'border-[#BFE5CD]' : 'border-[#F0E1A0]'
+            result.outcome === 'failure'
+              ? 'border-[#E5B8B8]'
+              : result.outcome === 'escalation'
+                ? 'border-[#F0E1A0]'
+                : 'border-[#BFE5CD]'
           }`}
         >
           <div
             className={`flex items-center justify-between px-5 py-3 ${
-              result.passed ? 'bg-[#E6F5EC]' : 'bg-[#FDF6DC]'
+              result.outcome === 'failure'
+                ? 'bg-[#FDECEC]'
+                : result.outcome === 'escalation'
+                  ? 'bg-[#FDF6DC]'
+                  : 'bg-[#E6F5EC]'
             }`}
           >
             <h2 className="text-[13px] font-bold uppercase tracking-wider text-ink-900">
@@ -140,14 +148,22 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
             </h2>
             <span
               className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ${
-                result.passed ? 'bg-success text-white' : 'bg-[#8A6D0A] text-white'
+                result.outcome === 'failure'
+                  ? 'bg-[#B03030] text-white'
+                  : result.outcome === 'escalation'
+                    ? 'bg-[#8A6D0A] text-white'
+                    : 'bg-success text-white'
               }`}
             >
-              {result.passed ? 'Resolved autonomously (within policy)' : 'Escalation required'}
+              {result.outcome === 'failure'
+                ? 'Failed — caught at verification'
+                : result.outcome === 'escalation'
+                  ? 'Escalation required'
+                  : 'Resolved autonomously (within policy)'}
             </span>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 bg-white px-5 py-4">
+          <div className="grid grid-cols-1 gap-6 bg-white px-5 py-4 sm:grid-cols-3">
             <div className="col-span-2">
               <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Result</p>
               <p className="mt-1 text-[13.5px] leading-relaxed text-ink-900">
@@ -156,14 +172,18 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
                   : result.reason}
               </p>
             </div>
-            <div className="flex flex-col gap-3 border-l border-ink-900/8 pl-6">
+            <div className="flex flex-col gap-3 border-t border-ink-900/8 pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Agent confidence</p>
                 <p className="data text-[17px] font-bold text-ink-900">{result.agentConfidence}%</p>
               </div>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Task success</p>
-                <p className={`data text-[17px] font-bold ${result.passed ? 'text-ink-900' : 'text-[#B03030]'}`}>
+                <p
+                  className={`data text-[17px] font-bold ${
+                    (result.taskSuccessPct ?? 0) < 50 ? 'text-[#B03030]' : 'text-ink-900'
+                  }`}
+                >
                   {result.taskSuccessPct}%
                 </p>
               </div>

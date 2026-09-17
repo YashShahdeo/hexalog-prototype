@@ -4,6 +4,7 @@ import {
   Bot,
   FlaskConical,
   Flag,
+  ListFilter,
   type LucideIcon,
 } from 'lucide-react'
 import { LogoLockup } from './HexMark'
@@ -16,6 +17,7 @@ export type ViewId =
   | 'approval'
   | 'eval'
   | 'roadmap'
+  | 'taxonomy'
 
 interface NavItem {
   id: ViewId | null
@@ -30,6 +32,7 @@ const NAV: NavItem[] = [
   { id: 'agents', label: 'AI Agents', icon: Bot },
   { id: 'eval', label: 'Simulations', icon: FlaskConical },
   { id: 'roadmap', label: 'Roadmap & ROI', icon: Flag },
+  { id: 'taxonomy', label: 'Taxonomy', icon: ListFilter },
 ]
 
 export function Sidebar({
@@ -41,7 +44,11 @@ export function Sidebar({
 }) {
   // Highlight the closest nav item for screens without their own entry.
   const effectiveActive: ViewId =
-    active === 'detail' ? 'ledger' : active === 'approval' ? 'ledger' : active
+    active === 'detail' || active === 'approval'
+      ? 'ledger'
+      : active === 'taxonomy'
+        ? 'eval'
+        : active
 
   return (
     <aside className="sticky top-0 flex h-screen w-60 shrink-0 flex-col border-r border-ink-900/8 bg-white px-3 py-5">

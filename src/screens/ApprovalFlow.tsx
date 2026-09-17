@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowLeft, ArrowRight, CheckCircle2, Circle, ClipboardCheck, RefreshCw, ShieldCheck, UserCheck } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCircle2, Circle, ClipboardCheck, RefreshCw, ShieldCheck, UserCheck, XCircle } from 'lucide-react'
 import { StepTracker } from '../components/StepTracker'
 import { EXCEPTIONS } from '../data/exceptions'
 import { Button } from '../components/Button'
 import { AuthorFooter } from '../components/AuthorFooter'
 
-type Phase = 'awaiting' | 'executing' | 'verifying' | 'verified'
+type Phase = 'awaiting' | 'rejected' | 'executing' | 'verifying' | 'verified'
 
 const EXECUTION_ITEMS = [
   { label: 'Invoice request sent to exporter (Document Agent)', detail: 'auto step · completed 2m after approval' },
@@ -29,6 +29,7 @@ export function ApprovalFlow({
   const exception = EXCEPTIONS.find((e) => e.id === exceptionId) ?? EXCEPTIONS[0]
   const [phase, setPhase] = useState<Phase>('awaiting')
   const [completed, setCompleted] = useState(0)
+  const [rejectionReason, setRejectionReason] = useState('')
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => () => timers.current.forEach(clearTimeout), [])
@@ -108,8 +109,51 @@ export function ApprovalFlow({
             onClick={startExecution}
             disabled={phase !== 'awaiting'}
           >
-            {phase === 'awaiting' ? 'Approve & execute' : 'Approved ✓'}
+            {phase === 'awaiting' || phase === 'rejected' ? 'Approve & execute' : 'Approved ✓'}
           </Button>
+
+          {phase === 'awaiting' && (
+            <div className="mt-4 border-t border-ink-900/8 pt-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-ink-400">
+                Not satisfied with the plan?
+              </p>
+              <textarea
+                value={rejectionReason}
+                onChange={(ev) => setRejectionReason(ev.target.value)}
+                rows={2}
+                placeholder="e.g. Duty impact understated — re-quantify before filing"
+                className="mt-2 w-full rounded-lg border border-ink-900/10 bg-soft-lavender/40 px-3 py-2 text-[12px] text-ink-900 placeholder:text-ink-400 focus:border-brand-purple/50 focus:outline-none"
+              />
+              <button
+                onClick={() => setPhase('rejected')}
+                disabled={rejectionReason.trim().length === 0}
+                className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg border border-[#E5B8B8] bg-[#FDECEC] px-4 py-2.5 text-[12.5px] font-semibold text-[#B03030] transition-colors enabled:hover:bg-[#F9DADA] disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <XCircle size={14} /> Reject plan — send back with reason
+              </button>
+            </div>
+          )}
+
+          {phase === 'rejected' && (
+            <div className="mt-4 animate-fadeSlideIn rounded-lg border border-[#E5B8B8] bg-[#FDECEC] px-3.5 py-3">
+              <p className="flex items-center gap-1.5 text-[12px] font-bold text-[#B03030]">
+                <XCircle size={13} /> Plan rejected — nothing executed
+              </p>
+              <p className="mt-1 text-[11px] leading-relaxed text-[#8A2424]">
+                Reason recorded to the audit log: “{rejectionReason}”
+              </p>
+              <button
+                onClick={() => {
+                  setRejectionReason('')
+                  setPhase('awaiting')
+                }}
+                className="mt-2 text-[11.5px] font-semibold text-[#B03030] underline decoration-dotted underline-offset-2 hover:text-[#8A2424]"
+              >
+                Revise &amp; restore plan →
+              </button>
+            </div>
+          )}
+
           <p className="mt-2.5 text-center text-[10.5px] leading-relaxed text-ink-600">
             {humanSteps.length} regulatory step{humanSteps.length === 1 ? '' : 's'}{' '}
             {humanSteps.length === 1 ? 'stays' : 'stay'} human-gated under the autonomy policy.
@@ -119,12 +163,20 @@ export function ApprovalFlow({
         {/* Column 2 — Execution checklist */}
         <section
           className={`rounded-card border border-ink-900/8 bg-white p-5 shadow-card transition-opacity ${
-            phase === 'awaiting' ? 'opacity-45' : 'opacity-100'
+            phase === 'awaiting' || phase === 'rejected' ? 'opacity-45' : 'opacity-100'
           }`}
         >
           <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-ink-900">
             <ClipboardCheck size={15} className="text-brand-purple" /> Execution
           </h2>
+
+          {phase === 'rejected' && (
+            <div className="mt-3 rounded-lg border border-[#E5B8B8] bg-[#FDECEC] px-3.5 py-2.5">
+              <p className="text-[11.5px] font-semibold leading-snug text-[#B03030]">
+                Execution halted — the human gate is real. No agent step ran after rejection.
+              </p>
+            </div>
+          )}
 
           <div className="mt-4 flex flex-col gap-2.5">
             {EXECUTION_ITEMS.map((item, i) => {
@@ -190,7 +242,7 @@ export function ApprovalFlow({
               <div className="flex items-center justify-center gap-2 rounded-lg border border-ink-900/8 bg-soft-lavender/50 px-4 py-3">
                 <RefreshCw size={15} className={`text-ink-400 ${phase === 'verifying' ? 'animate-spin' : ''}`} />
                 <span className="text-[12.5px] font-medium text-ink-400">
-                  {phase === 'awaiting' ? 'Awaiting approval' : 'Running verification checks…'}
+                  {phase === 'awaiting' ? 'Awaiting approval' : phase === 'rejected' ? 'Plan rejected — nothing to verify' : 'Running verification checks…'}
                 </span>
               </div>
             )}

@@ -96,6 +96,8 @@ export interface SimulationScenario {
   name: string
   description: string
   passed: boolean
+  /** pass = resolved within policy · escalation = policy working · failure = agent wrong, caught at verification */
+  outcome?: 'pass' | 'escalation' | 'failure'
   reason?: string
   /** "What we'd do about it" — next autonomy step on a pass, human path on an escalation */
   escalationPath?: string

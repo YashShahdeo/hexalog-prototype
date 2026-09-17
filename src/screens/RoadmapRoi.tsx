@@ -36,7 +36,7 @@ export function RoadmapRoi() {
           <h2 className="text-[13px] font-bold uppercase tracking-wider text-ink-900">Network roll-up — the business case</h2>
           <span className="data text-[11px] font-semibold text-brand-purple">{NETWORK_ROLLUP.basis}</span>
         </div>
-        <div className="grid grid-cols-3 divide-x divide-ink-900/6 border-b border-ink-900/6">
+        <div className="grid grid-cols-1 divide-y divide-ink-900/6 border-b border-ink-900/6 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {NETWORK_ROLLUP.stats.map((s) => (
             <div key={s.label} className="px-6 py-5">
               <p className="data text-[30px] font-bold leading-none text-brand-purple">
@@ -48,7 +48,7 @@ export function RoadmapRoi() {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-2 divide-x divide-ink-900/6 bg-[#FCFBFE]">
+        <div className="grid grid-cols-1 divide-y divide-ink-900/6 bg-[#FCFBFE] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
           {NETWORK_ROLLUP.secondary.map((s) => (
             <div key={s.label} className="flex items-baseline gap-2 px-6 py-3">
               <span className="data text-[17px] font-bold text-ink-900">{s.value}</span>

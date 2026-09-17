@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, ShieldAlert } from 'lucide-react'
 import { StepTracker } from '../components/StepTracker'
+import { AuthorFooter } from '../components/AuthorFooter'
 import { EXCEPTIONS } from '../data/exceptions'
 import { Badge, SlaRiskBadge } from '../components/Badge'
 import { Button } from '../components/Button'
@@ -255,6 +256,7 @@ export function ExceptionDetail({
           </div>
         </aside>
       </div>
+      <AuthorFooter />
     </div>
   )
 }

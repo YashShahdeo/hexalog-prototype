@@ -8,6 +8,7 @@ import { AgentOrchestration } from './screens/AgentOrchestration'
 import { ApprovalFlow } from './screens/ApprovalFlow'
 import { EvaluationSimulator } from './screens/EvaluationSimulator'
 import { RoadmapRoi } from './screens/RoadmapRoi'
+import { ExceptionTaxonomy } from './screens/ExceptionTaxonomy'
 import { HERO_EXCEPTION_ID } from './data/exceptions'
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
         )}
         {view === 'eval' && <EvaluationSimulator onOpenRoadmap={() => setView('roadmap')} />}
         {view === 'roadmap' && <RoadmapRoi />}
+        {view === 'taxonomy' && <ExceptionTaxonomy />}
       </main>
     </div>
   )

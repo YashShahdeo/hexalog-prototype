@@ -57,6 +57,31 @@ export const SIMULATED_MATH_NOTE =
 export const PLATFORM_BRIDGE =
   'Assumed architecture — to validate in Week 1: a resolution layer on Hexalog’s orchestration platform, consuming its event streams, document store and partner network. Not a parallel system.'
 
+/**
+ * §3.1 — the assumptions surface. Naming what is assumed vs known vs simulated
+ * is a product-management skill, not a weakness. Shown via the Assumptions badge
+ * in the header of every screen.
+ */
+export const ASSUMPTIONS = {
+  assumed: [
+    'The orchestration platform exposes event streams, a document store and partner-network APIs in roughly the shape modelled here',
+    'Exception records can be written back to the platform, not only read',
+    '₹1,800/hr blended ops cost',
+    '2.9h median handling time per exception',
+    'Customs, carrier and warehouse systems are integrated enough to correlate a single shipment across all three',
+  ],
+  known: [
+    '97% on-time delivery, 29,000+ pincodes, 80+ trade lanes, 100% HS classification accuracy, 10+ ports, 6+ VACs (hexalog.in)',
+    'Active corridors: India–China, India–Middle East; expansion to Vietnam, Thailand, Oceania',
+    'Stated architecture: a semantic layer over an orchestration layer',
+  ],
+  simulated: [
+    'All shipment IDs, client names, values and timestamps',
+    'The ~1,800-case history and the 214-case eval set',
+    'Every figure on the Evaluation and Roadmap screens',
+  ],
+}
+
 /** Author attribution — rendered in the footer of every screen. Links render only when filled. */
 export const AUTHOR = {
   name: 'Yash N Shahdeo',

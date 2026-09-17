@@ -1,4 +1,4 @@
-import { ArrowDownToLine, Target, Wrench, ArrowUpFromLine, Gauge, ShieldAlert, ShieldCheck } from 'lucide-react'
+import { ArrowDownToLine, Target, Wrench, ArrowUpFromLine, Gauge, ShieldAlert } from 'lucide-react'
 import type { Agent } from '../types'
 import { Badge } from './Badge'
 
@@ -41,10 +41,6 @@ export function AgentCard({ agent }: { agent: Agent }) {
         <span className="flex items-center gap-1.5 text-[12px] text-ink-600">
           <Gauge size={13} className="text-brand-violet" />
           Confidence <span className="data font-semibold text-ink-900">{agent.confidence}%</span>
-        </span>
-        <span className="flex items-center gap-1.5 text-[12px] text-ink-600">
-          <ShieldCheck size={13} className="text-brand-violet" />
-          Policy-bound
         </span>
       </div>
     </div>
