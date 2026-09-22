@@ -1,13 +1,30 @@
 export function HexMark({ size = 22 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 46 51"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+      className="shrink-0"
+    >
       <path
-        d="M12 1.8 21 7v10l-9 5.2L3 17V7l9-5.2Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
+        d="M7.65511 8.68054L0.531124 12.8892L22.545 25.9025L30.0921 21.4836L23.059 17.3109L29.4774 13.5935L36.7217 17.8372L44.6218 13.0669L22.7488 0.0540079L14.6374 4.82372L20.6156 8.35993L13.9853 12.288L7.65511 8.68054Z"
+        fill="#8F62DF"
       />
-      <path d="M12 7.2 16.5 9.8v5L12 17.4 7.5 14.8v-5L12 7.2Z" fill="currentColor" opacity="0.85" />
+      <path
+        d="M22.2544 27L0.492188 14L0.0276275 37.9458L22.2544 50.3257L22.2544 27Z"
+        fill="#442A59"
+      />
+      <path
+        d="M45.3879 14.1025L23.0992 27.2985L23.0992 50.4686L45.3866 37.9153L45.3879 14.1025Z"
+        fill="#442A59"
+      />
+      <path
+        d="M22.9922 27L45.4922 14V38L22.9922 50.5V27Z"
+        fill="#744C8A"
+      />
     </svg>
   )
 }
