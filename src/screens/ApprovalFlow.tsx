@@ -26,7 +26,7 @@ export function ApprovalFlow({
 
   useEffect(() => () => timers.current.forEach(clearTimeout), [])
 
-  // B1 — execution and verification are per-exception, never shared across cases
+  // B1 - execution and verification are per-exception, never shared across cases
   const executionItems = exception.executionItems
   const verifyRows = exception.verifyOutcomes
 
@@ -47,7 +47,7 @@ export function ApprovalFlow({
     })
   }
 
-  // B2 — render in the plan's own sequence; color encodes autonomy
+  // B2 - render in the plan's own sequence; color encodes autonomy
   const orderedSteps = [...exception.resolutionPlan].sort((a, b) => a.step - b.step)
   const humanSteps = exception.resolutionPlan.filter((s) => s.autonomy === 'human')
 
@@ -70,7 +70,7 @@ export function ApprovalFlow({
       </header>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-        {/* Column 1 — Human approval */}
+        {/* Column 1 - Human approval */}
         <section className="rounded-card border border-ink-900/8 bg-white p-5 shadow-card">
           <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-ink-900">
             <UserCheck size={15} className="text-brand-purple" /> Human approval
@@ -138,7 +138,7 @@ export function ApprovalFlow({
                 value={rejectionReason}
                 onChange={(ev) => setRejectionReason(ev.target.value)}
                 rows={2}
-                placeholder="e.g. Duty impact understated — re-quantify before filing"
+                placeholder="e.g. Duty impact understated - re-quantify before filing"
                 className="mt-2 w-full rounded-lg border border-ink-900/10 bg-soft-lavender/40 px-3 py-2 text-[12px] text-ink-900 placeholder:text-ink-400 focus:border-brand-purple/50 focus:outline-none"
               />
               <button
@@ -146,7 +146,7 @@ export function ApprovalFlow({
                 disabled={rejectionReason.trim().length === 0}
                 className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg border border-[#E5B8B8] bg-[#FDECEC] px-4 py-2.5 text-[12.5px] font-semibold text-[#B03030] transition-colors enabled:hover:bg-[#F9DADA] disabled:cursor-not-allowed disabled:opacity-40"
               >
-                <XCircle size={14} /> Reject plan — send back with reason
+                <XCircle size={14} /> Reject plan - send back with reason
               </button>
             </div>
           )}
@@ -154,13 +154,13 @@ export function ApprovalFlow({
           {phase === 'rejected' && (
             <div className="mt-4 animate-fadeSlideIn rounded-lg border border-[#E5B8B8] bg-[#FDECEC] px-3.5 py-3">
               <p className="flex items-center gap-1.5 text-[12px] font-bold text-[#B03030]">
-                <XCircle size={13} /> Plan rejected — nothing executed
+                <XCircle size={13} /> Plan rejected - nothing executed
               </p>
               <p className="mt-1 text-[11px] leading-relaxed text-[#8A2424]">
                 Reason recorded to the audit log: “{rejectionReason}”
               </p>
               <p className="mt-1.5 border-t border-[#E5B8B8]/60 pt-1.5 text-[10.5px] leading-relaxed text-[#8A2424]/80">
-                Rejection reason and plan diff are added to the eval set — override patterns tune the autonomy
+                Rejection reason and plan diff are added to the eval set - override patterns tune the autonomy
                 threshold.
               </p>
               <button
@@ -178,7 +178,7 @@ export function ApprovalFlow({
           <p className="mt-2.5 text-center text-[10.5px] leading-relaxed text-ink-600">
             {humanSteps.length === 0 ? (
               <>
-                No regulatory steps in this plan — every action falls inside the autonomy policy.
+                No regulatory steps in this plan - every action falls inside the autonomy policy.
                 {orderedSteps.some((s) => s.autonomy === 'recommend') &&
                   ' The client-facing step is recommend-only and still routes to a human.'}
               </>
@@ -191,7 +191,7 @@ export function ApprovalFlow({
           </p>
         </section>
 
-        {/* Column 2 — Execution checklist */}
+        {/* Column 2 - Execution checklist */}
         <section
           className={`rounded-card border border-ink-900/8 bg-white p-5 shadow-card transition-opacity ${
             phase === 'awaiting' || phase === 'rejected' ? 'opacity-45' : 'opacity-100'
@@ -204,7 +204,7 @@ export function ApprovalFlow({
           {phase === 'rejected' && (
             <div className="mt-3 rounded-lg border border-[#E5B8B8] bg-[#FDECEC] px-3.5 py-2.5">
               <p className="text-[11.5px] font-semibold leading-snug text-[#B03030]">
-                Execution halted — the human gate is real. No agent step ran after rejection.
+                Execution halted - the human gate is real. No agent step ran after rejection.
               </p>
             </div>
           )}
@@ -236,7 +236,7 @@ export function ApprovalFlow({
           </div>
         </section>
 
-        {/* Column 3 — Verify outcome — white card */}
+        {/* Column 3 - Verify outcome - white card */}
         <section className="rounded-card border border-ink-900/8 bg-white p-5 shadow-card">
           <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-ink-900">
             <ShieldCheck size={15} className="text-brand-purple" /> Verify outcome
@@ -267,7 +267,7 @@ export function ApprovalFlow({
               <div className="flex items-center justify-center gap-2 rounded-lg border border-ink-900/8 bg-soft-lavender/50 px-4 py-3">
                 <RefreshCw size={15} className={`text-ink-400 ${phase === 'verifying' ? 'animate-spin' : ''}`} />
                 <span className="text-[12.5px] font-medium text-ink-400">
-                  {phase === 'awaiting' ? 'Awaiting approval' : phase === 'rejected' ? 'Plan rejected — nothing to verify' : 'Running verification checks…'}
+                  {phase === 'awaiting' ? 'Awaiting approval' : phase === 'rejected' ? 'Plan rejected - nothing to verify' : 'Running verification checks…'}
                 </span>
               </div>
             )}
@@ -275,7 +275,7 @@ export function ApprovalFlow({
         </section>
       </div>
 
-      {/* Outcome loop strip — white card, outlined pills */}
+      {/* Outcome loop strip - white card, outlined pills */}
       <div className="mt-7 rounded-card border border-ink-900/8 bg-white px-6 py-4 shadow-card">
         <div className="flex items-center justify-center gap-3">
           {LOOP_STEPS.map((step, i) => (
@@ -294,7 +294,7 @@ export function ApprovalFlow({
           ))}
         </div>
         <p className="mt-2.5 text-center text-[11px] text-ink-400">
-          Verified outcomes become new evaluation data — the loop feeds the Evaluation screen.
+          Verified outcomes become new evaluation data - the loop feeds the Evaluation screen.
         </p>
         {phase === 'verified' && (
           <div className="mt-4 flex justify-center">

@@ -24,7 +24,7 @@ const OUT_OF_SCOPE: Partial<Record<Filter, string>> = {
 }
 
 export function ExceptionLedger({ onOpenException }: { onOpenException: (id: string) => void }) {
-  // §3.3 depth over breadth — Customs is the default lens, not All
+  // §3.3 depth over breadth - Customs is the default lens, not All
   const [filter, setFilter] = useState<Filter>('customs')
 
   const rows = EXCEPTIONS.filter((e) => filter === 'all' || e.category === filter).sort((a, b) => {
@@ -38,7 +38,7 @@ export function ExceptionLedger({ onOpenException }: { onOpenException: (id: str
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Exception Ledger</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          Sorted by business risk, not recency — filtered to Phase 1 scope by default.
+          Sorted by business risk, not recency - filtered to Phase 1 scope by default.
         </p>
       </header>
 
@@ -73,14 +73,14 @@ export function ExceptionLedger({ onOpenException }: { onOpenException: (id: str
         </div>
       </div>
 
-      {/* Depth-over-breadth note — the ledger's default lens is the Phase 1 class */}
+      {/* Depth-over-breadth note - the ledger's default lens is the Phase 1 class */}
       <p className="border border-t-0 border-ink-900/8 bg-white px-5 pb-3 pt-2.5 text-[11.5px] leading-relaxed text-ink-600">
         Going deep on customs DOC_HOLD first. The other classes are mapped (see{' '}
         <span className="font-semibold text-brand-purple">Taxonomy</span>) but deliberately out of Phase 1 scope.
       </p>
 
       {/* Column headers */}
-      {/* FIX 1 — CATEGORY column dropped (redundant under the Customs default). Desktop table only
+      {/* FIX 1 - CATEGORY column dropped (redundant under the Customs default). Desktop table only
           at lg+ where the ~700px min grid fits inside the card; below that, rows stack as cards. */}
       <div className="hidden w-full grid-cols-[80px_minmax(220px,1fr)_100px_72px_150px] items-center gap-3 border-b border-ink-900/8 bg-white px-5 py-2.5 text-[10.5px] font-bold uppercase tracking-wider text-ink-400 lg:grid">
         <span>Severity</span>

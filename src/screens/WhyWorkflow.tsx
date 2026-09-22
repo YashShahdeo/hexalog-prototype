@@ -66,16 +66,16 @@ export function WhyWorkflow({ onEnter }: { onEnter: () => void }) {
           Why this workflow
         </p>
         <h1 className="mt-3 text-[38px] font-extrabold leading-[1.12] tracking-tight text-white">
-          Exception resolution is where cross-border logistics loses its time — and where AI can earn it back.
+          Exception resolution is where cross-border logistics loses its time - and where AI can earn it back.
         </h1>
 
         <p className="mt-6 text-[15.5px] leading-relaxed text-white/75">
-          Cross-border shipments generate exceptions at every stage — a missing customs document, an HS code
+          Cross-border shipments generate exceptions at every stage - a missing customs document, an HS code
           mismatch, a carrier delay, port congestion. Today, resolving one means a person manually checking
           tracking, customs portals, document stores and carrier feeds, diagnosing the cause, coordinating the
-          right party, and following up until closed. The pattern —{' '}
+          right party, and following up until closed. The pattern -{' '}
           <span className="text-white">Event → Exception → Investigation → Decision → Coordination → Resolution</span>{' '}
-          — is repetitive, structured, and measurable. That makes it a strong candidate for progressive agentic
+          - is repetitive, structured, and measurable. That makes it a strong candidate for progressive agentic
           automation.
         </p>
 
@@ -99,12 +99,12 @@ export function WhyWorkflow({ onEnter }: { onEnter: () => void }) {
 
         <p className="mt-7 border-l-2 border-soft-yellow pl-4 text-[14px] italic leading-relaxed text-white/80">
           Hypothesis, not claim: a large class of logistics exceptions can be progressively automated because they
-          follow repeatable investigation and resolution patterns — while risk-sensitive actions remain
+          follow repeatable investigation and resolution patterns - while risk-sensitive actions remain
           human-controlled.
         </p>
 
         <p className="mt-4 text-[13px] leading-relaxed text-white/70">
-          <span className="font-semibold text-white">Scope:</span> this prototype goes deep on one class — customs
+          <span className="font-semibold text-white">Scope:</span> this prototype goes deep on one class - customs
           DOC_HOLD on the India–China and India–Middle East lanes, the corridors Hexalog runs today. The same
           pattern extends to Vietnam, Thailand and Oceania as those lanes open.
         </p>

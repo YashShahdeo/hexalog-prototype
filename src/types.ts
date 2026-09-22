@@ -3,7 +3,7 @@ export type ExceptionStatus = 'new' | 'in_review' | 'resolved'
 export type AutonomyLevel = 'auto' | 'recommend' | 'human'
 export type ExceptionCategory = 'customs' | 'freight' | 'warehouse' | 'last_mile' | 'reverse_logistics'
 
-/** Client segment — MSME lens is Hexalog's stated thesis (CEO, YourStory). */
+/** Client segment - MSME lens is Hexalog's stated thesis (CEO, YourStory). */
 export type ClientSegment = 'msme_d2c' | 'enterprise'
 
 export interface ExceptionEvidence {
@@ -20,7 +20,7 @@ export interface ExceptionBusinessImpact {
   estimatedCost: string
 }
 
-/** Working-capital framing — a held shipment is locked capital, not just a delay. */
+/** Working-capital framing - a held shipment is locked capital, not just a delay. */
 export interface WorkingCapitalImpact {
   lockedAmount: string
   lockedSince: string
@@ -34,13 +34,13 @@ export interface ResolutionStep {
   autonomy: AutonomyLevel
 }
 
-/** Execution-checklist row (ApprovalFlow column 2) — per exception, in plan-step order */
+/** Execution-checklist row (ApprovalFlow column 2) - per exception, in plan-step order */
 export interface ExecutionItem {
   label: string
   detail: string
 }
 
-/** Post-execution verification row (ApprovalFlow column 3) — per exception */
+/** Post-execution verification row (ApprovalFlow column 3) - per exception */
 export interface VerifyOutcome {
   label: string
   final: string
@@ -64,7 +64,7 @@ export interface Exception {
 
   /** Distinct callout rendered above the evidence trail (e.g. HS-case filing-accuracy framing) */
   topNote?: string
-  /** Blast radius if the AI's call is wrong — the cost of being wrong */
+  /** Blast radius if the AI's call is wrong - the cost of being wrong */
   wrongCost?: string
 
   evidenceTrail: ExceptionEvidence[]
@@ -75,7 +75,7 @@ export interface Exception {
   workingCapital?: WorkingCapitalImpact
   resolutionPlan: ResolutionStep[]
 
-  /** Per-exception execution checklist — derives from the resolution plan, never shared across cases */
+  /** Per-exception execution checklist - derives from the resolution plan, never shared across cases */
   executionItems: ExecutionItem[]
   /** Per-exception post-execution verification outcomes */
   verifyOutcomes: VerifyOutcome[]
@@ -99,7 +99,7 @@ export interface Agent {
   output: string
   confidence: number
   autonomy: AutonomyLevel
-  /** Hard boundary — what this agent is never allowed to do. */
+  /** Hard boundary - what this agent is never allowed to do. */
   mustNever: string
 }
 
@@ -118,7 +118,7 @@ export interface SimulationScenario {
   /** pass = resolved within policy · escalation = policy working · failure = agent wrong, caught at verification */
   outcome?: 'pass' | 'escalation' | 'failure'
   reason?: string
-  /** "What we'd do about it" — next autonomy step on a pass, human path on an escalation */
+  /** "What we'd do about it" - next autonomy step on a pass, human path on an escalation */
   escalationPath?: string
   agentConfidence?: number
   taskSuccessPct?: number

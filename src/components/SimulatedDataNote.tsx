@@ -5,7 +5,7 @@ export function SimulatedDataNote({ text }: { text?: string }) {
     <p className="flex items-start gap-1.5 text-[11px] leading-relaxed text-ink-400">
       <Info size={12} className="mt-0.5 shrink-0" />
       {text ??
-        'All figures on this screen are illustrative/simulated for the concept prototype — not production Hexalog data.'}
+        'All figures on this screen are illustrative/simulated for the concept prototype - not production Hexalog data.'}
     </p>
   )
 }

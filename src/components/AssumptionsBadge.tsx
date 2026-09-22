@@ -3,7 +3,7 @@ import { HelpCircle } from 'lucide-react'
 import { ASSUMPTIONS } from '../data/hexalogStory'
 
 /**
- * §3.1 — persistent Assumptions badge. Lives in the StepTracker header row on every
+ * §3.1 - persistent Assumptions badge. Lives in the StepTracker header row on every
  * in-app screen (WhyWorkflow has no StepTracker; its footer pointer line covers it).
  * Click opens a popover with the three-column assumptions surface.
  */
@@ -39,7 +39,7 @@ export function AssumptionsBadge() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div>
                 <p className="text-[10.5px] font-bold uppercase tracking-wider text-[#8A6D0A]">
-                  Assumed — to validate in Week 1
+                  Assumed - to validate in Week 1
                 </p>
                 <ul className="mt-1.5 flex flex-col gap-1.5">
                   {ASSUMPTIONS.assumed.map((a) => (
@@ -51,7 +51,7 @@ export function AssumptionsBadge() {
               </div>
               <div>
                 <p className="text-[10.5px] font-bold uppercase tracking-wider text-success">
-                  Known — from public sources
+                  Known - from public sources
                 </p>
                 <ul className="mt-1.5 flex flex-col gap-1.5">
                   {ASSUMPTIONS.known.map((k) => (

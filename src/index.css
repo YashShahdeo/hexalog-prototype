@@ -31,7 +31,7 @@ body {
   @apply rounded-full bg-ink-400/40;
 }
 
-/* §4.4 — White card surfaces (taxonomy, budget/effort cards) — plain CSS: Tailwind's
+/* §4.4 - White card surfaces (taxonomy, budget/effort cards) - plain CSS: Tailwind's
    @apply cannot resolve opacity-modified custom colors (border-ink-900/8) */
 .card {
   border-radius: 10px;

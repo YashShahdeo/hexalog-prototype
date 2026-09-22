@@ -2,7 +2,7 @@ import { AUTHOR } from '../data/hexalogStory'
 
 /**
  * One-line attribution footer, shown on every screen. docUrl/linkedin/portfolio
- * render as links only when non-empty — a placeholder never ships as a dead link.
+ * render as links only when non-empty - a placeholder never ships as a dead link.
  */
 export function AuthorFooter({ dark = false }: { dark?: boolean }) {
   const docUrl = AUTHOR.docUrl as string

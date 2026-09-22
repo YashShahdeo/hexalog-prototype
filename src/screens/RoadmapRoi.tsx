@@ -13,11 +13,11 @@ export function RoadmapRoi() {
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Roadmap & ROI</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          From observing exceptions to resolving them autonomously — every phase tied to measurable value.
+          From observing exceptions to resolving them autonomously - every phase tied to measurable value.
         </p>
       </header>
 
-      {/* North Star banner — white card, gold accent flag (PRD: 1-2 gold uses max) */}
+      {/* North Star banner - white card, gold accent flag (PRD: 1-2 gold uses max) */}
       <div className="mb-7 rounded-card border border-ink-900/8 bg-white px-6 py-5 shadow-card">
         <div className="flex items-center gap-2">
           <Flag size={15} className="text-soft-yellow" />
@@ -30,10 +30,10 @@ export function RoadmapRoi() {
         <p className="mt-1.5 text-[12.5px] text-ink-600">{NORTH_STAR.definition}</p>
       </div>
 
-      {/* Network roll-up — the one-number business case (simulated) */}
+      {/* Network roll-up - the one-number business case (simulated) */}
       <section className="mb-7 overflow-hidden rounded-card border border-brand-purple/15 bg-white shadow-card">
         <div className="flex flex-wrap items-center justify-between gap-2 bg-soft-lavender/60 px-6 py-3">
-          <h2 className="text-[13px] font-bold uppercase tracking-wider text-ink-900">Network roll-up — the business case</h2>
+          <h2 className="text-[13px] font-bold uppercase tracking-wider text-ink-900">Network roll-up - the business case</h2>
           <span className="data text-[11px] font-semibold text-brand-purple">{NETWORK_ROLLUP.basis}</span>
         </div>
         <div className="grid grid-cols-1 divide-y divide-ink-900/6 border-b border-ink-900/6 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
@@ -61,16 +61,16 @@ export function RoadmapRoi() {
           <div className="mt-2 flex flex-col gap-1 text-[11px] leading-relaxed text-ink-600">
             <p>
               <span className="font-bold uppercase tracking-wide text-[#8A6D0A]">Assumption</span> · ₹1,800/hr
-              blended ops cost — to be replaced in Week 1 by actual loaded cost from Finance.
+              blended ops cost - to be replaced in Week 1 by actual loaded cost from Finance.
             </p>
             <p>
               <span className="font-bold uppercase tracking-wide text-[#8A6D0A]">Assumption</span> · 2.9h median
-              handling per exception — to be replaced in Week 1 by time-and-motion shadowing of 2–3 control
+              handling per exception - to be replaced in Week 1 by time-and-motion shadowing of 2–3 control
               tower executives.
             </p>
           </div>
           <p className="mt-2 border-t border-ink-900/6 pt-2 text-[11.5px] font-medium leading-relaxed text-ink-900">
-            This is the exception-handling spine of the AI logistics assistant the seed round funds — and it
+            This is the exception-handling spine of the AI logistics assistant the seed round funds - and it
             ports lane-by-lane as Middle East and Southeast Asia open.
           </p>
         </div>
@@ -134,7 +134,7 @@ export function RoadmapRoi() {
         </section>
       </div>
 
-      {/* Why this wins for Hexalog — pitch bookends the walkthrough */}
+      {/* Why this wins for Hexalog - pitch bookends the walkthrough */}
       <HexalogWinStrip tone="light" />
 
       {/* Closing success condition */}

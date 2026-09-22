@@ -27,7 +27,7 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Control Tower</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          Network health at a glance — what needs your attention right now.
+          Network health at a glance - what needs your attention right now.
         </p>
       </header>
 
@@ -40,7 +40,7 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
           value={atRisk}
           sub="SLA exposure flagged"
           tone="warning"
-          tooltip="5 of 6 open exceptions carry medium or high SLA risk — 1 is low-risk (auto-resolution likely)."
+          tooltip="5 of 6 open exceptions carry medium or high SLA risk - 1 is low-risk (auto-resolution likely)."
         />
         <StatCard label="Open exceptions" value={open.length} sub="queued for resolution" tone="danger" />
       </div>
@@ -52,7 +52,7 @@ export function ControlTower({ onOpenException }: { onOpenException: (id: string
         <StatCard label="Low severity" value={bySeverity.low} sub="auto-resolution likely" />
       </div>
 
-      {/* Outcome strip — §2.8(a): outcomes, not just counts */}
+      {/* Outcome strip - §2.8(a): outcomes, not just counts */}
       <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-card border border-ink-900/8 bg-white px-4 py-3 shadow-card">
         <span className="text-[12px] font-semibold text-ink-600">This week (simulated):</span>
         <span className="data text-[13px] font-bold text-success">9 auto-resolved</span>

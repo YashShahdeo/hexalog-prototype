@@ -4,8 +4,8 @@ export const AGENTS: Agent[] = [
   {
     id: 'detection',
     name: 'Detection Agent',
-    input: 'assumed: platform event streams — customs feed, carrier APIs, warehouse WMS, last-mile app',
-    goal: 'Spot anomalies and open exceptions the moment they form — before a human notices',
+    input: 'assumed: platform event streams - customs feed, carrier APIs, warehouse WMS, last-mile app',
+    goal: 'Spot anomalies and open exceptions the moment they form - before a human notices',
     tools: 'Event listeners, threshold rules, anomaly detection against historical baselines',
     output: 'New exception records with severity, category and initial confidence score',
     confidence: 92,
@@ -16,12 +16,12 @@ export const AGENTS: Agent[] = [
     id: 'investigation',
     name: 'Investigation Agent',
     input: 'Exception record + linked shipment, documents and event history',
-    goal: 'Establish the most likely root cause with cited evidence — never a bare guess',
+    goal: 'Establish the most likely root cause with cited evidence - never a bare guess',
     tools: 'assumed: platform document store queries, carrier/port feeds, historical case retrieval (~1,800 cases)',
     output: 'Ranked root-cause hypothesis with numbered evidence trail and confidence %',
     confidence: 84,
     autonomy: 'auto',
-    mustNever: 'Present a root cause without a numbered, sourced evidence trail — no bare assertions.',
+    mustNever: 'Present a root cause without a numbered, sourced evidence trail - no bare assertions.',
   },
   {
     id: 'document',
@@ -43,7 +43,7 @@ export const AGENTS: Agent[] = [
     output: 'Impact panel: current/predicted delay, SLA status, estimated cost',
     confidence: 86,
     autonomy: 'recommend',
-    mustNever: 'Modify an SLA, a contract term or a client commitment — it quantifies, it does not negotiate.',
+    mustNever: 'Modify an SLA, a contract term or a client commitment - it quantifies, it does not negotiate.',
   },
   {
     id: 'resolution',
@@ -70,4 +70,4 @@ export const AGENTS: Agent[] = [
 ]
 
 export const ORCHESTRATION_PRINCIPLE =
-  'Agents are narrow, observable and policy-bound — not one unrestricted AI.'
+  'Agents are narrow, observable and policy-bound - not one unrestricted AI.'

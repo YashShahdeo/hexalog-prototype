@@ -25,7 +25,7 @@ interface NavItem {
   icon: LucideIcon
 }
 
-/** Only modules built in this prototype scope — every item is clickable. */
+/** Only modules built in this prototype scope - every item is clickable. */
 const NAV: NavItem[] = [
   { id: 'tower', label: 'Control Tower', icon: LayoutDashboard },
   { id: 'ledger', label: 'Exceptions', icon: AlertTriangle },
@@ -75,7 +75,7 @@ export function Sidebar({
 
       <div className="mx-1 rounded-card border border-ink-900/6 bg-soft-lavender/70 p-3">
         <p className="text-[10.5px] leading-relaxed text-ink-600">
-          <span className="font-semibold text-brand-purple">Concept prototype.</span> All shipment data and metrics are illustrative — no real Hexalog systems or data.
+          <span className="font-semibold text-brand-purple">Concept prototype.</span> All shipment data and metrics are illustrative - no real Hexalog systems or data.
         </p>
       </div>
     </aside>

@@ -6,25 +6,25 @@ import { Badge, SlaRiskBadge } from '../components/Badge'
 import { Button } from '../components/Button'
 import type { Exception, WorkingCapitalImpact } from '../types'
 
-/** Production-integration context for each evidence source — hover for the honest status. */
+/** Production-integration context for each evidence source - hover for the honest status. */
 const SOURCE_NOTES: Record<string, string> = {
-  'customs feed': 'EDI / customs portal feed in production — integration assumed, to be confirmed Week 1',
-  'platform document store': 'Existing platform document store — assumed accessible via internal API',
-  'platform reverse-logistics module': 'Existing platform reverse-logistics data — assumed accessible via internal API',
-  'VAC inspection log': 'Value-Add Centre inspection records — presumed live; Hexalog operates 6+ VACs',
-  'address service': 'Geocoding / address validation service — third-party, integration assumed',
-  'finance system': 'Client ledger / finance system — assumed accessible via internal API',
-  'carrier API': 'Carrier milestone API — Hexalog already surfaces real-time tracking, so this feed is presumed live',
-  'port data feed': 'Port congestion / schedule data — third-party feed, integration assumed',
-  'Hexalog partner network': 'Partner-network quoting API — assumed via platform integrations',
-  'classification rules': 'Classification rule engine — a Phase 2 build item; logic shown is illustrative',
-  'tariff table': 'HS tariff reference data — static, low integration risk',
-  '~1,800 historical cases': 'Synthetic case history built for this prototype — would be replaced by 4–6 weeks of real exception records',
-  'comms log': 'Email / portal communication log — integration assumed',
-  'warehouse WMS': 'WMS scan events — Hexalog operates VACs with 99.5% inventory accuracy, so scan data is presumed live',
-  'last-mile app': 'Driver-app events — Hexalog already manages last-mile exception flows, so this feed is presumed live',
+  'customs feed': 'EDI / customs portal feed in production - integration assumed, to be confirmed Week 1',
+  'platform document store': 'Existing platform document store - assumed accessible via internal API',
+  'platform reverse-logistics module': 'Existing platform reverse-logistics data - assumed accessible via internal API',
+  'VAC inspection log': 'Value-Add Centre inspection records - presumed live; Hexalog operates 6+ VACs',
+  'address service': 'Geocoding / address validation service - third-party, integration assumed',
+  'finance system': 'Client ledger / finance system - assumed accessible via internal API',
+  'carrier API': 'Carrier milestone API - Hexalog already surfaces real-time tracking, so this feed is presumed live',
+  'port data feed': 'Port congestion / schedule data - third-party feed, integration assumed',
+  'Hexalog partner network': 'Partner-network quoting API - assumed via platform integrations',
+  'classification rules': 'Classification rule engine - a Phase 2 build item; logic shown is illustrative',
+  'tariff table': 'HS tariff reference data - static, low integration risk',
+  '~1,800 historical cases': 'Synthetic case history built for this prototype - would be replaced by 4–6 weeks of real exception records',
+  'comms log': 'Email / portal communication log - integration assumed',
+  'warehouse WMS': 'WMS scan events - Hexalog operates VACs with 99.5% inventory accuracy, so scan data is presumed live',
+  'last-mile app': 'Driver-app events - Hexalog already manages last-mile exception flows, so this feed is presumed live',
 }
-const DEFAULT_SOURCE_NOTE = 'Production system mapping is an assumption — to be confirmed in Week 1.'
+const DEFAULT_SOURCE_NOTE = 'Production system mapping is an assumption - to be confirmed in Week 1.'
 
 function EvidenceRow({ index, label, value, source }: { index: number; label: string; value: string; source: string }) {
   return (
@@ -53,7 +53,7 @@ const SEGMENT_LABEL: Record<Exception['clientSegment'], string> = {
   enterprise: 'Enterprise',
 }
 
-/** Working-capital framing — makes Hexalog's MSME thesis visible per exception. */
+/** Working-capital framing - makes Hexalog's MSME thesis visible per exception. */
 function WorkingCapitalCard({ wc }: { wc: WorkingCapitalImpact }) {
   return (
     <div className="rounded-card border border-brand-purple/20 bg-soft-lavender px-4 py-4">
@@ -150,7 +150,7 @@ export function ExceptionDetail({
             {e.topNote && (
               <div className="mb-3 rounded-card border border-[#F0E1A0] bg-[#FDF6DC] px-4 py-3">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-[#8A6D0A]">
-                  Read this first — filing-accuracy framing
+                  Read this first - filing-accuracy framing
                 </p>
                 <p className="mt-1 text-[12.5px] leading-relaxed text-[#8A6D0A]">{e.topNote}</p>
               </div>
@@ -192,7 +192,7 @@ export function ExceptionDetail({
             <p className="mt-3 flex items-start gap-1.5 text-[11.5px] leading-relaxed text-ink-600">
               <ShieldAlert size={13} className="mt-0.5 shrink-0 text-brand-violet" />
               Autonomy policy: low-risk actions can execute automatically; regulatory and customer-impacting
-              actions always require human approval — executed on top of Hexalog's orchestration platform (assumed integration — see Assumptions).
+              actions always require human approval - executed on top of Hexalog's orchestration platform (assumed integration - see Assumptions).
             </p>
 
             {/* Guided next step */}
@@ -204,7 +204,7 @@ export function ExceptionDetail({
           </section>
         </div>
 
-        {/* Business impact — white card */}
+        {/* Business impact - white card */}
         <aside>
           <div className="sticky top-6 rounded-card border border-ink-900/8 bg-white p-5 shadow-card">
             <h2 className="text-[11px] font-bold uppercase tracking-widest text-ink-400">Business impact</h2>
@@ -237,10 +237,10 @@ export function ExceptionDetail({
 
             {e.workingCapital && e.clientSegment === 'msme_d2c' && (
               <p className="mt-3 border-l-2 border-brand-purple/30 pl-3 text-[11px] italic leading-relaxed text-ink-600">
-                “What holds MSMEs back is rarely the product — it's the supply chain behind it.” Every cleared
+                “What holds MSMEs back is rarely the product - it's the supply chain behind it.” Every cleared
                 exception releases working capital back to the client.
                 <span className="mt-0.5 block not-italic text-[10px] text-ink-400">
-                  — Dibyanshu Tripathi, CEO (YourStory feature)
+                  - Dibyanshu Tripathi, CEO (YourStory feature)
                 </span>
               </p>
             )}

@@ -49,12 +49,12 @@ export function AgentOrchestration({
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Agent Orchestration</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          How the system works — six narrow agents on Hexalog's orchestration platform, with explicit
+          How the system works - six narrow agents on Hexalog's orchestration platform, with explicit
           boundaries, not one undifferentiated AI.
         </p>
       </header>
 
-      {/* Two-layer mapping — the CPTO's own public architecture vocabulary */}
+      {/* Two-layer mapping - the CPTO's own public architecture vocabulary */}
       <p className="mb-3 text-[12.5px] leading-relaxed text-ink-900">
         Mapped to Hexalog's stated architecture: Detection and Investigation sit in the{' '}
         <span className="font-semibold text-brand-purple">semantic layer</span> (making operational state
@@ -63,9 +63,9 @@ export function AgentOrchestration({
         simple interface).
       </p>
 
-      {/* Platform framing — stated as assumption, not internal knowledge */}
+      {/* Platform framing - stated as assumption, not internal knowledge */}
       <p className="mb-4 text-[12px] leading-relaxed text-ink-600">
-        Assumed architecture — to validate in Week 1: agents consume the orchestration platform's event
+        Assumed architecture - to validate in Week 1: agents consume the orchestration platform's event
         streams, document store and partner network as a resolution layer on top of the existing platform, not
         a parallel system. The specific stream and document-store shape below is an assumption drawn from
         public product descriptions, not internal knowledge.
@@ -78,13 +78,13 @@ export function AgentOrchestration({
         ))}
       </div>
 
-      {/* Principle banner — white card with purple accent */}
+      {/* Principle banner - white card with purple accent */}
       <div className="mt-7 rounded-card border border-ink-900/8 border-l-4 border-l-brand-purple bg-white px-6 py-5 shadow-card">
         <p className="text-center text-[14px] font-semibold text-ink-900">
           {ORCHESTRATION_PRINCIPLE}
         </p>
         <p className="mt-1.5 text-center text-[11.5px] text-ink-600">
-          Every agent has a defined input, goal, toolset and output — and its autonomy is set by policy, not by the model.{' '}
+          Every agent has a defined input, goal, toolset and output - and its autonomy is set by policy, not by the model.{' '}
           {PLATFORM_BRIDGE}
         </p>
       </div>

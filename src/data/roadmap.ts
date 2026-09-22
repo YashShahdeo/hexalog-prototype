@@ -3,14 +3,14 @@ import type { RoadmapPhase, ValueLever } from '../types'
 export const NORTH_STAR = {
   metric: 'Exception Resolution Success Rate',
   target: '≥ 90%',
-  definition: 'Exceptions resolved end-to-end with verified outcome and zero critical failures — measured weekly, not assumed.',
+  definition: 'Exceptions resolved end-to-end with verified outcome and zero critical failures - measured weekly, not assumed.',
 }
 
 export const ROADMAP_PHASES: RoadmapPhase[] = [
   {
     phaseNumber: 1,
     name: 'Observe',
-    description: 'Shadow live ops: agents detect, investigate and draft — nothing executes. Every output reviewed by a human.',
+    description: 'Shadow live ops: agents detect, investigate and draft - nothing executes. Every output reviewed by a human.',
     timeframe: 'Weeks 1–2',
     businessValue: 'Baseline data on exception patterns without operational risk',
   },
@@ -31,7 +31,7 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
   {
     phaseNumber: 4,
     name: 'Resolve',
-    description: 'End-to-end resolution for a narrow, high-confidence exception class — regulatory/financial steps still human-gated.',
+    description: 'End-to-end resolution for a narrow, high-confidence exception class - regulatory/financial steps still human-gated.',
     timeframe: 'Weeks 11–16',
     businessValue: 'Autonomous resolution on ~30–40% of exception volume (target class)',
   },

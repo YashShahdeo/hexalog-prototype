@@ -29,7 +29,7 @@ export function AgentCard({ agent }: { agent: Agent }) {
         ))}
       </dl>
 
-      {/* Agent boundary — the actual policy, replacing an unproven 'policy-bound' assertion */}
+      {/* Agent boundary - the actual policy, replacing an unproven 'policy-bound' assertion */}
       <div className="mt-4 flex items-start gap-2 rounded-lg border border-[#F5C6C6] bg-[#FDECEC] px-3 py-2.5">
         <ShieldAlert size={13} className="mt-0.5 shrink-0 text-[#B03030]" />
         <p className="text-[11.5px] leading-snug text-[#8A2424]">

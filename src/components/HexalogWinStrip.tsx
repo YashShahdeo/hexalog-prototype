@@ -2,7 +2,7 @@ import { Link2 } from 'lucide-react'
 import { HEXALOG_WINS } from '../data/hexalogStory'
 
 /**
- * "Why this wins for Hexalog" — three tiles anchoring the prototype to Hexalog's own
+ * "Why this wins for Hexalog" - three tiles anchoring the prototype to Hexalog's own
  * public numbers and words. tone='dark' for the WhyWorkflow gradient screen,
  * tone='light' for the Roadmap & ROI screen. Tiles with a verified source href
  * render as one-click verifiable links.

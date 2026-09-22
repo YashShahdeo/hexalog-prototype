@@ -23,7 +23,7 @@ export function ExceptionTaxonomy() {
           <ListFilter size={20} className="text-brand-purple" /> Exception Taxonomy &amp; Selection
         </h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          The prototype shows the answer — DOC_HOLD. This screen shows the choice: every exception class scored,
+          The prototype shows the answer - DOC_HOLD. This screen shows the choice: every exception class scored,
           and why one wins.
         </p>
       </header>

@@ -72,7 +72,7 @@ export function PriorityExceptionCard({
   )
 }
 
-/** §2.7 — the thesis at a glance: can this class resolve autonomously at all? */
+/** §2.7 - the thesis at a glance: can this class resolve autonomously at all? */
 function AutonomyChip({ plan }: { plan: Exception['resolutionPlan'] }) {
   const levels = plan.map((s) => s.autonomy)
   const label = levels.every((l) => l === 'auto') ? 'Auto-eligible' : levels.includes('human') ? 'Human-gated' : 'Partial'
@@ -104,7 +104,7 @@ export function LedgerRow({
       onClick={() => onOpen(exception.id)}
       className="group w-full border-b border-ink-900/6 px-5 py-3.5 text-left transition-colors last:border-b-0 hover:bg-soft-lavender/60"
     >
-      {/* Desktop: table row — exception column ≥220px, STATUS fully visible (category lives on the mobile card) */}
+      {/* Desktop: table row - exception column ≥220px, STATUS fully visible (category lives on the mobile card) */}
       <span className="hidden w-full grid-cols-[80px_minmax(220px,1fr)_100px_72px_150px] items-center gap-3 lg:grid">
         <Badge kind="severity" value={exception.severity} size="xs" />
         <span className="block min-w-0">
@@ -123,7 +123,7 @@ export function LedgerRow({
         </span>
       </span>
 
-      {/* Mobile/tablet: stacked card — visible below lg, where the desktop table hides */}
+      {/* Mobile/tablet: stacked card - visible below lg, where the desktop table hides */}
       <span className="flex w-full flex-col gap-2 lg:hidden">
         <span className="flex items-center justify-between gap-3">
           <span className="flex items-center gap-1.5">

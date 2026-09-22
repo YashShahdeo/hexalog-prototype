@@ -1,6 +1,6 @@
 import type { EvaluationMetric, SimulationScenario } from '../types'
 
-/** ILLUSTRATIVE / SIMULATED — Definition-of-Done metrics for the concept eval set. */
+/** ILLUSTRATIVE / SIMULATED - Definition-of-Done metrics for the concept eval set. */
 export const EVALUATION_METRICS: EvaluationMetric[] = [
   { name: 'Root-cause accuracy', target: '≥ 90%', simulatedCurrent: '93.4%', status: 'pass' },
   { name: 'Task success rate (approved plans)', target: '≥ 95%', simulatedCurrent: '96.1%', status: 'pass' },
@@ -28,13 +28,13 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
   {
     id: 'hs-mismatch',
     name: 'HS code mismatch (ambiguous BOM)',
-    description: 'Ambiguous BOM, two defensible readings — filing itself was fully consistent',
+    description: 'Ambiguous BOM, two defensible readings - filing itself was fully consistent',
     passed: false,
     outcome: 'escalation',
     reason:
-      'Escalation by design — regulatory ambiguity exceeds the autonomous-action threshold; dossier compiled for the compliance specialist',
+      'Escalation by design - regulatory ambiguity exceeds the autonomous-action threshold; dossier compiled for the compliance specialist',
     escalationPath:
-      'Human path: the specialist decides with the compiled dossier (BOM, supplier spec, prior rulings). Assistive, never decisive — this class scores lowest on the taxonomy and is excluded from autonomous resolution.',
+      'Human path: the specialist decides with the compiled dossier (BOM, supplier spec, prior rulings). Assistive, never decisive - this class scores lowest on the taxonomy and is excluded from autonomous resolution.',
     agentConfidence: 71,
     taskSuccessPct: 88,
     criticalFailures: 0,
@@ -70,9 +70,9 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     passed: false,
     outcome: 'escalation',
     reason:
-      'Escalation required — shipment value above autonomous financial-action ceiling; approval mandatory',
+      'Escalation required - shipment value above autonomous financial-action ceiling; approval mandatory',
     escalationPath:
-      'Human path: financial controller approves any action above the ceiling. The threshold itself is tunable — it widens only when false-confidence rate stays ≤2% across the class for a full quarter.',
+      'Human path: financial controller approves any action above the ceiling. The threshold itself is tunable - it widens only when false-confidence rate stays ≤2% across the class for a full quarter.',
     agentConfidence: 76,
     taskSuccessPct: 90,
     criticalFailures: 0,
@@ -84,9 +84,9 @@ export const SIMULATION_SCENARIOS: SimulationScenario[] = [
     passed: false,
     outcome: 'failure',
     reason:
-      'Investigation Agent attributed the delay to port congestion at 91% confidence. Post-execution verification found the shipment was under DOC_HOLD the whole time — the congestion was real but was not the binding constraint. Exception reopened, case added to the eval set, confidence threshold for single-source carrier attribution raised.',
+      'Investigation Agent attributed the delay to port congestion at 91% confidence. Post-execution verification found the shipment was under DOC_HOLD the whole time - the congestion was real but was not the binding constraint. Exception reopened, case added to the eval set, confidence threshold for single-source carrier attribution raised.',
     escalationPath:
-      'Verification catches it, not the human — this is why post-execution checks are a hard gate and not a formality. The case becomes eval data; the pattern (single-source attribution when a second system disagrees) becomes a detection rule.',
+      'Verification catches it, not the human - this is why post-execution checks are a hard gate and not a formality. The case becomes eval data; the pattern (single-source attribution when a second system disagrees) becomes a detection rule.',
     agentConfidence: 91,
     taskSuccessPct: 0,
     criticalFailures: 0,

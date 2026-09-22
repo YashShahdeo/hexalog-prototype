@@ -34,7 +34,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
     }, 700)
   }
 
-  // FEATURE — full suite: cascade rows 700ms apart, total < 6s. Most recent run wins.
+  // FEATURE - full suite: cascade rows 700ms apart, total < 6s. Most recent run wins.
   const runSuite = () => {
     timers.current.forEach(clearTimeout)
     setSuiteRunning(true)
@@ -76,7 +76,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
       <header className="mb-6">
         <h1 className="text-[26px] font-bold tracking-tight text-ink-900">Evaluation & Simulator</h1>
         <p className="mt-1 text-[13.5px] text-ink-600">
-          A digital twin of the exception workflow — run the agents against real-world and edge-case scenarios
+          A digital twin of the exception workflow - run the agents against real-world and edge-case scenarios
           before they touch a live shipment. Measured, not assumed.
         </p>
       </header>
@@ -91,7 +91,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
         <section className="overflow-hidden rounded-card border border-ink-900/8 bg-white shadow-card">
           <div className="border-b border-ink-900/8 bg-soft-lavender/60 px-5 py-3">
             <h2 className="text-[13px] font-bold uppercase tracking-wider text-ink-900">
-              Agent performance — Definition of Done
+              Agent performance - Definition of Done
             </h2>
           </div>
           <table className="w-full text-left">
@@ -124,7 +124,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
             </tbody>
           </table>
           <p className="border-t border-ink-900/6 bg-[#FDF6DC]/50 px-5 py-2.5 text-[11px] leading-relaxed text-[#8A6D0A]">
-            Human override rate currently misses target (11.3% vs ≤10%) — under ambiguous cases like
+            Human override rate currently misses target (11.3% vs ≤10%) - under ambiguous cases like
             HXL001351, the autonomy threshold is deliberately conservative (escalation by design). Tuning it
             is a roadmap-phase task, not a demo fix.
           </p>
@@ -158,7 +158,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
           </div>
 
           <div className="flex flex-col gap-2 border-t border-ink-900/8 p-4">
-            {/* Primary action — the suite is the demo moment */}
+            {/* Primary action - the suite is the demo moment */}
             <button
               onClick={runSuite}
               disabled={suiteRunning}
@@ -167,7 +167,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
               <Play size={15} />{' '}
               {suiteRunning
                 ? `Running suite… ${suiteRows.length}/${SIMULATION_SCENARIOS.length}`
-                : `Run full eval suite — ${SIMULATION_SCENARIOS.length} scenarios`}
+                : `Run full eval suite - ${SIMULATION_SCENARIOS.length} scenarios`}
             </button>
             <button
               onClick={runSimulation}
@@ -180,7 +180,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
         </section>
       </div>
 
-      {/* Suite results — cascade; most recent run wins over the single view */}
+      {/* Suite results - cascade; most recent run wins over the single view */}
       {suite && (
         <section className="mt-6 animate-fadeSlideIn overflow-hidden rounded-card border border-ink-900/8 shadow-card">
           <div className="flex flex-wrap items-center justify-between gap-2 bg-soft-lavender/60 px-5 py-3">
@@ -192,7 +192,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
             </span>
           </div>
 
-          {/* Mobile: stacked cards (§4.4 — never scroll a table on a phone) */}
+          {/* Mobile: stacked cards (§4.4 - never scroll a table on a phone) */}
           <div className="flex flex-col gap-3 bg-white p-4 md:hidden">
             {SIMULATION_SCENARIOS.map((s) => {
               const row = suite.rows.find((r) => r.scenarioId === s.id)
@@ -266,9 +266,9 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
                         <td className="px-3 py-3 text-[11px] font-semibold uppercase tracking-wider text-ink-400">
                           queued…
                         </td>
-                        <td className="px-3 py-3 text-[12px] text-ink-400">—</td>
-                        <td className="px-3 py-3 text-[12px] text-ink-400">—</td>
-                        <td className="px-5 py-3 text-[11.5px] text-ink-400">—</td>
+                        <td className="px-3 py-3 text-[12px] text-ink-400">-</td>
+                        <td className="px-3 py-3 text-[12px] text-ink-400">-</td>
+                        <td className="px-5 py-3 text-[11.5px] text-ink-400">-</td>
                       </tr>
                     )
                   }
@@ -326,11 +326,11 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
             </table>
           </div>
 
-          {/* Honesty caption — required: the suite is the method, the DoD table is the 214-case sample */}
+          {/* Honesty caption - required: the suite is the method, the DoD table is the 214-case sample */}
           {!suiteRunning && (
             <p className="border-t border-ink-900/8 bg-[#FCFBFE] px-5 py-3 text-[11.5px] leading-relaxed text-ink-600">
               These {SIMULATION_SCENARIOS.length} scenarios are the illustrative edge cases. The Definition of Done
-              table above reports the full 214-case synthetic eval run — the suite demonstrates the method, not the
+              table above reports the full 214-case synthetic eval run - the suite demonstrates the method, not the
               sample size.
             </p>
           )}
@@ -358,7 +358,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
             }`}
           >
             <h2 className="text-[13px] font-bold uppercase tracking-wider text-ink-900">
-              Latest simulation run — {result.name}
+              Latest simulation run - {result.name}
             </h2>
             <span
               className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ${
@@ -370,7 +370,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
               }`}
             >
               {result.outcome === 'failure'
-                ? 'Failed — caught at verification'
+                ? 'Failed - caught at verification'
                 : result.outcome === 'escalation'
                   ? 'Escalation required'
                   : 'Resolved autonomously (within policy)'}
@@ -423,7 +423,7 @@ export function EvaluationSimulator({ onOpenRoadmap }: { onOpenRoadmap: () => vo
       <div className="mt-6 flex flex-col items-end gap-1.5">
         {suite?.complete && (
           <p className="text-[11.5px] leading-relaxed text-ink-600">
-            Every verified outcome — including the failure — becomes eval data. That loop is what the roadmap's
+            Every verified outcome - including the failure - becomes eval data. That loop is what the roadmap's
             phase gates are measured against.
           </p>
         )}

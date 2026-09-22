@@ -1,5 +1,5 @@
 /**
- * Positioning content sourced from Hexalog's public site (hexalog.in) and public interviews —
+ * Positioning content sourced from Hexalog's public site (hexalog.in) and public interviews -
  * their own numbers and words, used to anchor this prototype to THEIR business.
  * All roll-up math below is simulated/illustrative for the concept prototype.
  */
@@ -8,7 +8,7 @@ export interface HexalogWin {
   stat: string
   statLabel: string
   connection: string
-  /** Verifiable source link — rendered only when present. Never guess a URL here. */
+  /** Verifiable source link - rendered only when present. Never guess a URL here. */
   href?: string
 }
 
@@ -28,11 +28,11 @@ export const HEXALOG_WINS: HexalogWin[] = [
     href: 'https://hexalog.in/services/freight-forwarding',
   },
   {
-    stat: '“What holds MSMEs back is rarely the product — it’s the supply chain behind it”',
-    statLabel: 'Dibyanshu Tripathi, CEO — YourStory feature',
+    stat: '“What holds MSMEs back is rarely the product - it’s the supply chain behind it”',
+    statLabel: 'Dibyanshu Tripathi, CEO - YourStory feature',
     connection:
       'Every cleared exception releases working capital for the smallest clients.',
-    // Owner: paste the exact YourStory feature URL here before sending — do not guess it.
+    // Owner: paste the exact YourStory feature URL here before sending - do not guess it.
   },
 ]
 
@@ -48,17 +48,17 @@ export const NETWORK_ROLLUP = {
     { value: '9', label: 'SLA breaches prevented / month' },
   ],
   derivationNote:
-    'Simulated math: median 2.9h manual handling per exception (from the synthetic ~1,800-case history) reduced to 0.6h of review under Phase 3/4 autonomy; ₹4.2L ops cost avoided at a ₹1,800/hr blended ops rate; 34% of volume lands in the Phase-4 target class (30–40% band). Illustrative model — not measured Hexalog performance.',
+    'Simulated math: median 2.9h manual handling per exception (from the synthetic ~1,800-case history) reduced to 0.6h of review under Phase 3/4 autonomy; ₹4.2L ops cost avoided at a ₹1,800/hr blended ops rate; 34% of volume lands in the Phase-4 target class (30–40% band). Illustrative model - not measured Hexalog performance.',
 }
 
 export const SIMULATED_MATH_NOTE =
-  'Roll-up is a simulated model built on the same synthetic ~1,800-case history used across the prototype — demonstrates the business-case approach, not measured Hexalog performance.'
+  'Roll-up is a simulated model built on the same synthetic ~1,800-case history used across the prototype - demonstrates the business-case approach, not measured Hexalog performance.'
 
 export const PLATFORM_BRIDGE =
-  'Assumed architecture — to validate in Week 1: a resolution layer on Hexalog’s orchestration platform, consuming its event streams, document store and partner network. Not a parallel system.'
+  'Assumed architecture - to validate in Week 1: a resolution layer on Hexalog’s orchestration platform, consuming its event streams, document store and partner network. Not a parallel system.'
 
 /**
- * §3.1 — the assumptions surface. Naming what is assumed vs known vs simulated
+ * §3.1 - the assumptions surface. Naming what is assumed vs known vs simulated
  * is a product-management skill. Shown via the Assumptions badge
  * in the header of every screen.
  */
@@ -82,7 +82,7 @@ export const ASSUMPTIONS = {
   ],
 }
 
-/** Author attribution — rendered in the footer of every screen. Links render only when filled. */
+/** Author attribution - rendered in the footer of every screen. Links render only when filled. */
 export const AUTHOR = {
   name: 'Yash N Shahdeo',
   email: 'yashnshahdeo@gmail.com',
